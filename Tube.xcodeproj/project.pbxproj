@@ -45,6 +45,7 @@
 		92B3640A2AD05F6500AB2696 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B364092AD05F6500AB2696 /* OnboardingView.swift */; };
 		92B3640C2AD060A200AB2696 /* HorizontalSwiperVideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3640B2AD060A200AB2696 /* HorizontalSwiperVideoCard.swift */; };
 		92B3640E2AD060C700AB2696 /* FollowedChannelFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3640D2AD060C700AB2696 /* FollowedChannelFeedView.swift */; };
+		ACF7FD812C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		92B364092AD05F6500AB2696 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		92B3640B2AD060A200AB2696 /* HorizontalSwiperVideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSwiperVideoCard.swift; sourceTree = "<group>"; };
 		92B3640D2AD060C700AB2696 /* FollowedChannelFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedChannelFeedView.swift; sourceTree = "<group>"; };
+		ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedChannelsCombinedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				928287412AA585DB00BEE10C /* VideoMiniplayerView.swift */,
 				92132FD82ACCBB5400FFFDFF /* MessageBlock.swift */,
 				92B3640D2AD060C700AB2696 /* FollowedChannelFeedView.swift */,
+				ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				922E0D4C2A9C4DDF0023980B /* FollowButton.swift in Sources */,
 				92B3640C2AD060A200AB2696 /* HorizontalSwiperVideoCard.swift in Sources */,
 				9259D0F92ACF156800709DBB /* SettingsView.swift in Sources */,
+				ACF7FD812C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift in Sources */,
 				922E0D3B2A9C3B9C0023980B /* ChannelVideosView.swift in Sources */,
 				922E0D332A9BEFF50023980B /* CommentsView.swift in Sources */,
 				928287402AA5647A00BEE10C /* VideoThumbnailTag.swift in Sources */,

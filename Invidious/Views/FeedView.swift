@@ -16,6 +16,7 @@ struct FeedView: View {
                         message: "Search for channels you'd like to follow."
                     ).padding(.horizontal)
                 } else {
+                    FollowedChannelsCombinedView(channels: channels)
                     ForEach(channels) { channel in
                         FollowedChannelFeedView(channel: channel)
                     }
@@ -41,5 +42,31 @@ struct FeedView: View {
 #Preview {
     NavigationStack {
         FeedView()
+            //.modelContainer(previewContainer)
     }
 }
+
+@MainActor
+let previewContainer: ModelContainer = {
+    do {
+        TubeApp.client.setApiUrl(url: URL(string: "https://inv.tux.pizza"))
+        
+        let container = try ModelContainer(
+            for: FollowedChannel.self,
+            configurations: .init(isStoredInMemoryOnly: true)
+        )
+        
+        let exampleChannels = [
+            FollowedChannel(id: "UCBJycsmduvYEL83R_U4JriQ", name: "MKBHD", dateFollowed: Date()),
+            FollowedChannel(id: "UC8JOgFXp-I3YV6dsKqqQdUw", name: "Caroline Winkler", dateFollowed: Date())
+        ]
+
+        for channel in exampleChannels {
+            container.mainContext.insert(channel)
+        }
+
+        return container
+    } catch {
+        fatalError("Failed to create container")
+    }
+}()
