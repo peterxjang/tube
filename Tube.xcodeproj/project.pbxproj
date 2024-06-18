@@ -53,8 +53,6 @@
 		AC1FE1D42C1D15FA0084AB66 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D302A9BDAD70023980B /* ThumbnailView.swift */; };
 		AC1FE1D52C1D16AC0084AB66 /* VideoThumbnailTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9282873F2AA5647A00BEE10C /* VideoThumbnailTag.swift */; };
 		AC1FE1D72C1D18400084AB66 /* OpenVideoPlayerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9282873D2AA5079800BEE10C /* OpenVideoPlayerAction.swift */; };
-		AC1FE1D92C1D19720084AB66 /* ContentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D1F2A9BA58E0023980B /* ContentGridView.swift */; };
-		AC1FE1DA2C1D19830084AB66 /* VideoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D212A9BA6A00023980B /* VideoGridItem.swift */; };
 		AC1FE1DB2C1D19BD0084AB66 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D342A9C36440023980B /* ImageView.swift */; };
 		AC1FE1DC2C1D19D30084AB66 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D4B2A9C4DDF0023980B /* FollowButton.swift */; };
 		AC1FE1DD2C1D19DF0084AB66 /* PlaylistItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D412A9C459C0023980B /* PlaylistItemView.swift */; };
@@ -68,7 +66,6 @@
 		AC1FE1EA2C1F27B50084AB66 /* VideoDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D2C2A9BD2E10023980B /* VideoDetailsView.swift */; };
 		AC1FE1EB2C1F27C20084AB66 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D322A9BEFF50023980B /* CommentsView.swift */; };
 		AC1FE1EC2C1F27E30084AB66 /* VideoQueueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922313FA2AA6356700F55F30 /* VideoQueueListView.swift */; };
-		AC1FE1EE2C1F284A0084AB66 /* ChannelVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D3A2A9C3B9C0023980B /* ChannelVideosView.swift */; };
 		AC1FE1EF2C1F28530084AB66 /* ChannelPlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D3D2A9C44A50023980B /* ChannelPlaylistsView.swift */; };
 		AC1FE1F02C1F28650084AB66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9259D0F82ACF156800709DBB /* SettingsView.swift */; };
 		AC1FE1F12C1F62220084AB66 /* TubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B9C542A9B88920060FC9F /* TubeApp.swift */; };
@@ -81,6 +78,9 @@
 		ACB32E8A2C2126A600C540BB /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E892C2126A600C540BB /* SubscriptionsView.swift */; };
 		ACB32E8C2C21BE9B00C540BB /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E8B2C21BE9B00C540BB /* ChannelView.swift */; };
 		ACB32E8E2C21BEFA00C540BB /* ChannelHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E8D2C21BEFA00C540BB /* ChannelHeaderView.swift */; };
+		ACB32E942C21CD0600C540BB /* ChannelVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */; };
+		ACB32E952C21CD6D00C540BB /* VideoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D212A9BA6A00023980B /* VideoGridItem.swift */; };
+		ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D1F2A9BA58E0023980B /* ContentGridView.swift */; };
 		ACF7FD812C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
 		ACF7FD8B2C1CB26200C9EDB9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */; };
 		ACF7FD8D2C1CB26400C9EDB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */; };
@@ -162,6 +162,7 @@
 		ACB32E892C2126A600C540BB /* SubscriptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsView.swift; sourceTree = "<group>"; };
 		ACB32E8B2C21BE9B00C540BB /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		ACB32E8D2C21BEFA00C540BB /* ChannelHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelHeaderView.swift; sourceTree = "<group>"; };
+		ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelVideosView.swift; sourceTree = "<group>"; };
 		ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedChannelsCombinedView.swift; sourceTree = "<group>"; };
 		ACF7FD862C1CB26200C9EDB9 /* tvOSTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOSTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -283,7 +284,6 @@
 				92931D022A9DA308004993D5 /* README.md */,
 				923B9C532A9B88920060FC9F /* Invidious */,
 				ACF7FD872C1CB26200C9EDB9 /* tvOSTube */,
-				ACF7FD982C1CB26400C9EDB9 /* tvOSTubeTests */,
 				ACF7FDA22C1CB26400C9EDB9 /* tvOSTubeUITests */,
 				923B9C522A9B88920060FC9F /* Products */,
 				923B9C702A9BA0A80060FC9F /* Frameworks */,
@@ -374,12 +374,14 @@
 				ACB32E892C2126A600C540BB /* SubscriptionsView.swift */,
 				ACB32E8B2C21BE9B00C540BB /* ChannelView.swift */,
 				ACB32E8D2C21BEFA00C540BB /* ChannelHeaderView.swift */,
+				ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */,
 				ACB32E7F2C2068A600C540BB /* SearchView.swift */,
 				ACB32E812C20715200C540BB /* SearchResultsView.swift */,
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
 				ACB32E852C20B14300C540BB /* ChannelCard.swift */,
 				ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */,
 				ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */,
+				ACF7FD982C1CB26400C9EDB9 /* tvOSTubeTests */,
 				ACF7FD8E2C1CB26400C9EDB9 /* Preview Content */,
 			);
 			path = tvOSTube;
@@ -624,26 +626,27 @@
 			files = (
 				ACB32E882C20CADE00C540BB /* FeedView.swift in Sources */,
 				AC1FE1E52C1F27240084AB66 /* VideoListItemView.swift in Sources */,
+				ACB32E952C21CD6D00C540BB /* VideoGridItem.swift in Sources */,
 				ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */,
+				ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */,
 				AC1FE1F12C1F62220084AB66 /* TubeApp.swift in Sources */,
 				AC1FE1E92C1F27AA0084AB66 /* VideoView.swift in Sources */,
 				AC1FE1D32C1D15D20084AB66 /* HorizontalSwiperVideoCard.swift in Sources */,
 				AC1FE1D72C1D18400084AB66 /* OpenVideoPlayerAction.swift in Sources */,
 				AC1FE1EF2C1F28530084AB66 /* ChannelPlaylistsView.swift in Sources */,
 				ACB32E8C2C21BE9B00C540BB /* ChannelView.swift in Sources */,
-				AC1FE1DA2C1D19830084AB66 /* VideoGridItem.swift in Sources */,
 				AC1FE1EC2C1F27E30084AB66 /* VideoQueueListView.swift in Sources */,
 				ACF7FD8B2C1CB26200C9EDB9 /* ContentView.swift in Sources */,
 				ACF7FDB42C1CB58300C9EDB9 /* Following.swift in Sources */,
 				AC1FE1EB2C1F27C20084AB66 /* CommentsView.swift in Sources */,
 				ACB32E8A2C2126A600C540BB /* SubscriptionsView.swift in Sources */,
+				ACB32E942C21CD0600C540BB /* ChannelVideosView.swift in Sources */,
 				AC1FE1DB2C1D19BD0084AB66 /* ImageView.swift in Sources */,
 				ACF7FDB52C1CB58300C9EDB9 /* Settings.swift in Sources */,
 				AC1FE1D52C1D16AC0084AB66 /* VideoThumbnailTag.swift in Sources */,
 				AC1FE1E32C1F27020084AB66 /* View.swift in Sources */,
 				AC1FE1E62C1F27340084AB66 /* VideoPlayerView.swift in Sources */,
 				ACB32E862C20B14300C540BB /* ChannelCard.swift in Sources */,
-				AC1FE1EE2C1F284A0084AB66 /* ChannelVideosView.swift in Sources */,
 				AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */,
 				ACB32E822C20715200C540BB /* SearchResultsView.swift in Sources */,
 				ACB32E842C20900000C540BB /* VideoCard.swift in Sources */,
@@ -658,7 +661,6 @@
 				AC1FE1E72C1F27470084AB66 /* VideoMiniplayerView.swift in Sources */,
 				AC1FE1D22C1D15BD0084AB66 /* FollowedChannelsCombinedView.swift in Sources */,
 				AC1FE1E82C1F275C0084AB66 /* PlaylistView.swift in Sources */,
-				AC1FE1D92C1D19720084AB66 /* ContentGridView.swift in Sources */,
 				AC1FE1E42C1F270D0084AB66 /* AsyncOverlayView.swift in Sources */,
 				AC1FE1D42C1D15FA0084AB66 /* ThumbnailView.swift in Sources */,
 				ACF7FDB62C1CB58300C9EDB9 /* VideoQueue.swift in Sources */,

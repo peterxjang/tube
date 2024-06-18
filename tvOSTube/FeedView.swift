@@ -19,11 +19,6 @@ struct FeedView: View {
                     ).padding(.horizontal)
                 } else {
                     VStack(alignment: .leading) {
-                        Text("Recent Videos from All Channels")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .padding(.horizontal)
-
                         if isLoading {
                             ProgressView()
                                 .padding()
@@ -31,13 +26,10 @@ struct FeedView: View {
                             MessageBlock(title: "No Videos", message: "No videos available from followed channels.")
                                 .padding()
                         } else {
-                            ScrollView(.horizontal) {
-                                LazyHGrid(rows: [.init(.flexible(minimum: 600, maximum: 600))], alignment: .top, spacing: 100.0) {
-                                    ForEach(combinedVideos, id: \.videoId) { video in
-                                        VideoCard(videoObject: video)
-                                    }
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 100) {
+                                ForEach(combinedVideos, id: \.videoId) { video in
+                                    VideoCard(videoObject: video)
                                 }
-                                .padding(.horizontal)
                             }
                         }
                     }
@@ -45,9 +37,9 @@ struct FeedView: View {
                         await fetchCombinedVideos()
                     }
                 }
-            }.padding(.vertical)
+            }
+            .padding(50)
         }
-        .navigationTitle("Feed")
     }
     
     private func fetchCombinedVideos() async {
