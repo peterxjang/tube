@@ -1,7 +1,14 @@
+//
+//  VideoCard.swift
+//  tvOSTube
+//
+//  Created by Peter Jang on 6/17/24.
+//
+
 import SwiftUI
 import InvidiousKit
 
-struct HorizontalSwiperVideoCard: View {
+struct VideoCard: View {
     var id: String
     var title: String
     var duration: Int
@@ -22,18 +29,21 @@ struct HorizontalSwiperVideoCard: View {
     }
 
     var body: some View {
+        let width = 500.0
+        let height = width / 1.5
+        
         Button(action: action) {
             VStack(alignment: .leading) {
                 ZStack {
-                    ThumbnailView(width: 250.0, height: 140.625, radius: 8.0, thumbnails: thumbnails)
+                    ThumbnailView(width: width, height: height, radius: 8.0, thumbnails: thumbnails)
                     VideoThumbnailTag(self.formattedDuration)
-                }.frame(width: 250.0, height: 140.625)
+                }.frame(width: width, height: height)
                 Text(title).lineLimit(1).font(.callout)
                 Text(published).lineLimit(1).foregroundStyle(.secondary).font(.callout)
             }
         }
         .buttonStyle(.plain)
-        .frame(width: 250.0)
+        .frame(width: width)
     }
 
     @MainActor

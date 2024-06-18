@@ -20,7 +20,6 @@ struct RootView: View {
     @State var query: String = ""
     @Environment(VideoQueue.self) var queue
     @Environment(OpenVideoPlayerAction.self) private var openPlayer
-    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -66,7 +65,7 @@ struct RootView: View {
                 path = newPath
             case "video":
                 Task {
-                    await openPlayer(id: value, openWindow: openWindow)
+                    await openPlayer(id: value)
                 }
             default:
                 return
