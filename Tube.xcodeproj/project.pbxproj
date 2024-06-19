@@ -59,11 +59,8 @@
 		AC1FE1E32C1F27020084AB66 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D282A9BB9920023980B /* View.swift */; };
 		AC1FE1E42C1F270D0084AB66 /* AsyncOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D252A9BB8330023980B /* AsyncOverlayView.swift */; };
 		AC1FE1E52C1F27240084AB66 /* VideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D2E2A9BD9860023980B /* VideoListItemView.swift */; };
-		AC1FE1E62C1F27340084AB66 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D2A2A9BBBEE0023980B /* VideoPlayerView.swift */; };
 		AC1FE1E72C1F27470084AB66 /* VideoMiniplayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928287412AA585DB00BEE10C /* VideoMiniplayerView.swift */; };
 		AC1FE1E82C1F275C0084AB66 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D462A9C48E40023980B /* PlaylistView.swift */; };
-		AC1FE1E92C1F27AA0084AB66 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B9C682A9B9B190060FC9F /* VideoView.swift */; };
-		AC1FE1EA2C1F27B50084AB66 /* VideoDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D2C2A9BD2E10023980B /* VideoDetailsView.swift */; };
 		AC1FE1EB2C1F27C20084AB66 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D322A9BEFF50023980B /* CommentsView.swift */; };
 		AC1FE1EC2C1F27E30084AB66 /* VideoQueueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922313FA2AA6356700F55F30 /* VideoQueueListView.swift */; };
 		AC1FE1EF2C1F28530084AB66 /* ChannelPlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D3D2A9C44A50023980B /* ChannelPlaylistsView.swift */; };
@@ -81,6 +78,7 @@
 		ACB32E942C21CD0600C540BB /* ChannelVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */; };
 		ACB32E952C21CD6D00C540BB /* VideoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D212A9BA6A00023980B /* VideoGridItem.swift */; };
 		ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D1F2A9BA58E0023980B /* ContentGridView.swift */; };
+		ACB32E982C2265F300C540BB /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E972C2265F300C540BB /* VideoView.swift */; };
 		ACF7FD812C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
 		ACF7FD8B2C1CB26200C9EDB9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */; };
 		ACF7FD8D2C1CB26400C9EDB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */; };
@@ -163,6 +161,7 @@
 		ACB32E8B2C21BE9B00C540BB /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		ACB32E8D2C21BEFA00C540BB /* ChannelHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelHeaderView.swift; sourceTree = "<group>"; };
 		ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelVideosView.swift; sourceTree = "<group>"; };
+		ACB32E972C2265F300C540BB /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedChannelsCombinedView.swift; sourceTree = "<group>"; };
 		ACF7FD862C1CB26200C9EDB9 /* tvOSTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOSTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -378,6 +377,7 @@
 				ACB32E7F2C2068A600C540BB /* SearchView.swift */,
 				ACB32E812C20715200C540BB /* SearchResultsView.swift */,
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
+				ACB32E972C2265F300C540BB /* VideoView.swift */,
 				ACB32E852C20B14300C540BB /* ChannelCard.swift */,
 				ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */,
 				ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */,
@@ -630,7 +630,6 @@
 				ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */,
 				ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */,
 				AC1FE1F12C1F62220084AB66 /* TubeApp.swift in Sources */,
-				AC1FE1E92C1F27AA0084AB66 /* VideoView.swift in Sources */,
 				AC1FE1D32C1D15D20084AB66 /* HorizontalSwiperVideoCard.swift in Sources */,
 				AC1FE1D72C1D18400084AB66 /* OpenVideoPlayerAction.swift in Sources */,
 				AC1FE1EF2C1F28530084AB66 /* ChannelPlaylistsView.swift in Sources */,
@@ -645,7 +644,6 @@
 				ACF7FDB52C1CB58300C9EDB9 /* Settings.swift in Sources */,
 				AC1FE1D52C1D16AC0084AB66 /* VideoThumbnailTag.swift in Sources */,
 				AC1FE1E32C1F27020084AB66 /* View.swift in Sources */,
-				AC1FE1E62C1F27340084AB66 /* VideoPlayerView.swift in Sources */,
 				ACB32E862C20B14300C540BB /* ChannelCard.swift in Sources */,
 				AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */,
 				ACB32E822C20715200C540BB /* SearchResultsView.swift in Sources */,
@@ -657,10 +655,10 @@
 				ACB32E8E2C21BEFA00C540BB /* ChannelHeaderView.swift in Sources */,
 				AC1FE1DD2C1D19DF0084AB66 /* PlaylistItemView.swift in Sources */,
 				AC1FE1D12C1D15BD0084AB66 /* FollowedChannelFeedView.swift in Sources */,
-				AC1FE1EA2C1F27B50084AB66 /* VideoDetailsView.swift in Sources */,
 				AC1FE1E72C1F27470084AB66 /* VideoMiniplayerView.swift in Sources */,
 				AC1FE1D22C1D15BD0084AB66 /* FollowedChannelsCombinedView.swift in Sources */,
 				AC1FE1E82C1F275C0084AB66 /* PlaylistView.swift in Sources */,
+				ACB32E982C2265F300C540BB /* VideoView.swift in Sources */,
 				AC1FE1E42C1F270D0084AB66 /* AsyncOverlayView.swift in Sources */,
 				AC1FE1D42C1D15FA0084AB66 /* ThumbnailView.swift in Sources */,
 				ACF7FDB62C1CB58300C9EDB9 /* VideoQueue.swift in Sources */,
