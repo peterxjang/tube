@@ -55,14 +55,7 @@ struct SearchResultsView: View {
                         case .video(let video):
                             VideoCard(videoObject: video)
                         case .channel(let channel):
-                            // ChannelCard(channel: channel)
-                            VStack {
-                                ImageView(width: 200, height: 200, images: channel.authorThumbnails)
-                                Text(channel.author)
-                                Text("\(channel.subCount.formatted()) subscribers").font(.callout)
-                                    .foregroundStyle(.secondary)
-                                FollowButton(channelId: channel.authorId, channelName: channel.author)
-                            }
+                             ChannelCard(channel: channel)
                         case .playlist(let playlist):
                             PlaylistItemView(id: playlist.playlistId, title: playlist.title, author: playlist.author, videoCount: playlist.videoCount)
                         }
