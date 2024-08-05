@@ -30,7 +30,11 @@ struct VideoView: View {
     @Environment(OpenVideoPlayerAction.self) private var playerState
 
     var body: some View {
-        VideoPlayerView(player: queue.playerQueue).ignoresSafeArea()
+        VideoPlayerView(player: queue.playerQueue)
+            .ignoresSafeArea()
+            .onDisappear {
+                playerState.closeAndClear()
+            }
     }
 }
 

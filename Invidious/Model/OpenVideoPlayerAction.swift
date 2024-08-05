@@ -14,6 +14,12 @@ final class OpenVideoPlayerAction {
         isPlayerOpen = false
     }
 
+    public func closeAndClear() {
+        isPlayerOpen = false
+        queue.clear()
+        queue.playerQueue.pause()
+    }
+
     @MainActor
     public func callAsFunction(id: String?) async {
         if let id {
