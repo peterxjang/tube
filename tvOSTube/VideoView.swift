@@ -1,10 +1,3 @@
-//
-//  VideoView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/18/24.
-//
-
 import AVKit
 import InvidiousKit
 import Observation
@@ -43,13 +36,52 @@ struct VideoPlayerView: UIViewControllerRepresentable {
 
     typealias NSViewControllerType = AVPlayerViewController
 
-    func makeUIViewController(context _: Context) -> UIViewController {
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
         let videoView = AVPlayerViewController()
         videoView.player = player
         videoView.player?.play()
         videoView.allowsPictureInPicturePlayback = false
+        videoView.player?.rate = 1.0
+        let playPauseTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseTap))
+        playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        let playPauseDoubleTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseDoubleTap))
+        playPauseDoubleTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        playPauseDoubleTap.numberOfTapsRequired = 2
+        playPauseTap.require(toFail: playPauseDoubleTap)
+        videoView.view.addGestureRecognizer(playPauseTap)
+        videoView.view.addGestureRecognizer(playPauseDoubleTap)
         return videoView
     }
 
-    func updateUIViewController(_: UIViewController, context _: Context) {}
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, player: player)
+    }
+
+    class Coordinator: NSObject {
+        var parent: VideoPlayerView
+        var player: AVPlayer
+
+        init(_ parent: VideoPlayerView, player: AVPlayer) {
+            self.parent = parent
+            self.player = player
+        }
+
+        @objc func handlePlayPauseTap() {
+            if player.rate == 0.0 {
+                player.play()
+            } else {
+                player.pause()
+            }
+        }
+
+        @objc func handlePlayPauseDoubleTap() {
+            if player.rate == 1.0 {
+                player.rate = 2.0
+            } else {
+                player.rate = 1.0
+            }
+        }
+    }
 }
