@@ -60,7 +60,7 @@ struct SearchResultsView: View {
                             PlaylistItemView(id: playlist.playlistId, title: playlist.title, author: playlist.author, videoCount: playlist.videoCount)
                         }
                     }
-                }.padding(.horizontal)
+                }.padding(50)
             }
             .onChange(of: query) { _, _ in
                 model.handleUpdate(query: query)

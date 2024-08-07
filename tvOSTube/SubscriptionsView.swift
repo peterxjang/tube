@@ -39,7 +39,7 @@ struct SubscriptionsView: View {
                         }
                     }
                 }
-            }.padding(.vertical)
+            }.padding(50)
         }
         .navigationTitle("Feed")
         .sheet(item: $selectedChannel) { channel in

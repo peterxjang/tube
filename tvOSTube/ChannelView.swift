@@ -60,9 +60,11 @@ struct ChannelView: View {
         ScrollView {
             if let channel = model.channel {
                 ChannelHeaderView(channel: channel, selection: $model.selectedTab)
+                    .padding(.bottom, 50)
                 switch model.selectedTab {
                 case .videos(let list):
                     ChannelVideosView(model: ChannelVideosViewModel(list: list, channelId: model.channelId))
+                        .padding()
                 case .playlists:
                     ChannelPlaylistsView(model: ChannelPlaylistsViewModel(channelId: model.channelId))
                 }

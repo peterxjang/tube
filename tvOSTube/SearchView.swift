@@ -17,8 +17,8 @@ struct SearchView: View {
     var body: some View {
         VStack {
             TextField("Search...", text: $search)
-                .padding()
             SearchResultsView(query: $search)
+                .padding()
             Spacer()
         }
         .padding()
