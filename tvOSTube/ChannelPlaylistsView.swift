@@ -37,7 +37,7 @@ struct ChannelPlaylistsView: View {
 
     var body: some View {
         LazyVStack {
-            ContentGridView {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 50) {
                 ForEach(model.playlists, id: \.playlistId) { playlist in
                     PlaylistItemView(
                         id: playlist.playlistId,
@@ -45,7 +45,7 @@ struct ChannelPlaylistsView: View {
                         thumbnail: playlist.playlistThumbnail,
                         author: playlist.author,
                         videoCount: playlist.videoCount
-                    )
+                    ).padding()
                 }
             }
             if !model.done {

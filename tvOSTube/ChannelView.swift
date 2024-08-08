@@ -67,6 +67,7 @@ struct ChannelView: View {
                         .padding()
                 case .playlists:
                     ChannelPlaylistsView(model: ChannelPlaylistsViewModel(channelId: model.channelId))
+                        .padding(50)
                 }
             }
         }

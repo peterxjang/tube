@@ -22,7 +22,7 @@ struct PlaylistItemView: View {
                             }
                         }
                     }
-                    .frame(maxWidth: 360, maxHeight: 202.5)
+                    .frame(maxWidth: 500, maxHeight: 280)
                     .aspectRatio(16 / 9, contentMode: .fill)
                     .background(Rectangle().foregroundStyle(.background))
                     .cornerRadius(8.0)
@@ -34,6 +34,7 @@ struct PlaylistItemView: View {
                     Text(author).lineLimit(1).foregroundStyle(.secondary).font(.callout)
                 }
             }
+            .padding()
         }
         .buttonStyle(.plain)
         .sheet(isPresented: $showPlaylistView) {
