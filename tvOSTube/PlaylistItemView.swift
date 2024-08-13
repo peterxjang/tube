@@ -37,8 +37,14 @@ struct PlaylistItemView: View {
             .padding()
         }
         .buttonStyle(.plain)
-        .sheet(isPresented: $showPlaylistView) {
-            PlaylistView(model: PlaylistViewModel(playlistId: id))
+        .fullScreenCover(isPresented: $showPlaylistView) {
+            ZStack {
+                Color.black
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    PlaylistView(model: PlaylistViewModel(playlistId: id))
+                }
+            }
         }
     }
     
