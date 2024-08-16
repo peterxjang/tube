@@ -1,10 +1,3 @@
-//
-//  SubscriptionsView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/17/24.
-//
-
 import InvidiousKit
 import Observation
 import SwiftData
@@ -13,6 +6,7 @@ import SwiftUI
 struct SubscriptionsView: View {
     @Query(sort: \FollowedChannel.name) var channels: [FollowedChannel]
     @State private var selectedChannel: FollowedChannel? = nil
+    @Binding var resetView: Bool
 
     var body: some View {
         NavigationView {
@@ -41,5 +35,6 @@ struct SubscriptionsView: View {
                 }.padding(50)
             }
         }
+        .id(resetView) // Reset the view by changing the id whenever resetView changes
     }
 }
