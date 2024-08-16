@@ -71,31 +71,11 @@ struct ChannelView: View {
                 }
             }
         }
-        .navigationTitle("Channel")
         .asyncTaskOverlay(error: model.error, isLoading: model.loading)
         .task(id: model.channelId) {
             await model.load()
         }.refreshable {
             await model.load()
-        }.toolbar {
-            if let url = URL(string: "https://youtube.com/channel/\(model.channelId)") {
-                ToolbarItem {
-                    #if !os(tvOS)
-                    ShareLink(item: url)
-                    #endif
-                }
-            }
-            if let channel = model.channel {
-                ToolbarItem {
-                    FollowButton(channelId: model.channelId, channelName: channel.author)
-                }
-            } else {
-                ToolbarItem {
-                    Button {} label: {
-                        Label("Follow", systemImage: "heart")
-                    }.disabled(true)
-                }
-            }
         }
     }
 }
