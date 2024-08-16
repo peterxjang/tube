@@ -1,16 +1,10 @@
-//
-//  ChannelHeaderView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/18/24.
-//
-
 import InvidiousKit
 import SwiftUI
 
 struct ChannelHeaderView: View {
     var channel: Channel
     @Binding var selection: ChannelViewModel.ChannelTab
+    @FocusState private var isPickerFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,12 +30,18 @@ struct ChannelHeaderView: View {
                     Text("Shorts").tag(ChannelViewModel.ChannelTab.videos(.shorts))
                     Text("Streams").tag(ChannelViewModel.ChannelTab.videos(.streams))
                     Text("Playlists").tag(ChannelViewModel.ChannelTab.playlists)
-                } label: {}.labelsHidden().modify {
+                } label: {}
+                .labelsHidden()
+                .modify {
                     if proxy.size.width >= 768 {
                         $0.pickerStyle(.segmented)
                     } else {
                         $0.pickerStyle(.menu)
                     }
+                }
+                .focused($isPickerFocused) // Bind focus state to the picker
+                .onAppear {
+                    isPickerFocused = true // Set focus to the picker when the view appears
                 }
             }
         }.padding()

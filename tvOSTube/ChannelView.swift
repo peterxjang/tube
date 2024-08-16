@@ -1,10 +1,3 @@
-//
-//  ChannelView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/18/24.
-//
-
 import InvidiousKit
 import Observation
 import SwiftUI
@@ -55,7 +48,8 @@ class ChannelViewModel {
 
 struct ChannelView: View {
     @Bindable var model: ChannelViewModel
-    
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         ScrollView {
             if let channel = model.channel {
@@ -74,8 +68,18 @@ struct ChannelView: View {
         .asyncTaskOverlay(error: model.error, isLoading: model.loading)
         .task(id: model.channelId) {
             await model.load()
-        }.refreshable {
+        }
+        .refreshable {
             await model.load()
+        }
+        .toolbar {
+            ToolbarItem {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Label("", systemImage: "arrow.backward")
+                }
+            }
         }
     }
 }
