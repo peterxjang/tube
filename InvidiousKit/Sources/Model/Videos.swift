@@ -18,7 +18,7 @@ public struct Video: Decodable {
     public var isFamilyFriendly: Bool
     public var allowedRegions: [String]
     public var genre: String
-    public var genreUrl: String
+    public var genreUrl: String?
 
     public var author: String
     public var authorId: String
@@ -157,7 +157,13 @@ public extension APIClient {
         guard let idPath = id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
             throw APIError.urlCreation
         }
-        let (data, _) = try await request(for: "/api/v1/videos/\(idPath)")
-        return try Self.decoder.decode(Video.self, from: data)
+        do {
+            let (data, _) = try await request(for: "/api/v1/videos/\(idPath)")
+            return try Self.decoder.decode(Video.self, from: data)
+        } catch {
+            print("An error occurred: \(error.localizedDescription)")
+            print("Error details: \(error)")
+            throw error
+        }
     }
 }
