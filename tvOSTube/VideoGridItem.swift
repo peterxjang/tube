@@ -10,7 +10,7 @@ struct VideoGridItem: View {
     var published: String
     var thumbnails: [ThumbnailObject]
     @Environment(OpenVideoPlayerAction.self) var openPlayer
-    @Environment(VideoQueue.self) var queue
+//    @Environment(VideoQueue.self) var queue
 
     private var formattedDuration: String {
         (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
@@ -38,13 +38,13 @@ struct VideoGridItem: View {
             }
         }.buttonStyle(.plain).contextMenu(menuItems: {
             Button {
-                Task {
-                    do {
-                        try await queue.add(id: id)
-                    } catch {
-                        print("Error")
-                    }
-                }
+//                Task {
+//                    do {
+//                        try await queue.add(id: id)
+//                    } catch {
+//                        print("Error")
+//                    }
+//                }
             } label: {
                 Text("Add to Queue")
             }

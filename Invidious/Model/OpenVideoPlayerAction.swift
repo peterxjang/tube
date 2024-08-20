@@ -14,14 +14,8 @@ final class OpenVideoPlayerAction {
         isPlayerOpen = false
     }
 
-    public func closeAndClear() {
-        isPlayerOpen = false
-        queue.clear()
-        queue.playerQueue.pause()
-    }
-
     @MainActor
-    public func callAsFunction(id: String?) async {
+    public func callAsFunction(id: String?, openWindow: OpenWindowAction) async {
         if let id {
             queue.clear()
             try? await queue.add(id: id)
@@ -31,7 +25,6 @@ final class OpenVideoPlayerAction {
             isPlayerOpen = true
         }
         #else
-        @Environment(\.openWindow) var openWindow
         openWindow(id: "video-player", value: "video-player")
         #endif
     }

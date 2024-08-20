@@ -17,17 +17,19 @@ class VideoViewModel: Identifiable {
 
 struct VideoView: View {
     @Bindable var model: VideoViewModel
-    @State var player: AVPlayer?
-    @State var showingQueue: Bool = false
-    @Environment(VideoQueue.self) private var queue
     @Environment(OpenVideoPlayerAction.self) private var playerState
 
     var body: some View {
-        VideoPlayerView(player: queue.playerQueue)
-            .ignoresSafeArea()
-            .onDisappear {
-                playerState.closeAndClear()
-            }
+        if let player = playerState.currentPlayer {
+            VideoPlayerView(player: player)
+                .ignoresSafeArea()
+                .onDisappear {
+                    playerState.close()
+                }
+        } else {
+            Text("No video to play")
+                .ignoresSafeArea()
+        }
     }
 }
 
@@ -42,14 +44,19 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         videoView.player?.play()
         videoView.allowsPictureInPicturePlayback = false
         videoView.player?.rate = 1.0
+
         let playPauseTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseTap))
         playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        
         let playPauseDoubleTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseDoubleTap))
         playPauseDoubleTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
         playPauseDoubleTap.numberOfTapsRequired = 2
+        
         playPauseTap.require(toFail: playPauseDoubleTap)
+        
         videoView.view.addGestureRecognizer(playPauseTap)
         videoView.view.addGestureRecognizer(playPauseDoubleTap)
+        
         return videoView
     }
 
