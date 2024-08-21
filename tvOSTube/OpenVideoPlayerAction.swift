@@ -6,6 +6,17 @@ import InvidiousKit
 import MediaPlayer
 import Observation
 
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ProgressView("Loading...")
+                .progressViewStyle(CircularProgressViewStyle())
+                .foregroundColor(.white)
+        }
+    }
+}
+
 enum VideoPlaybackError: LocalizedError {
     case missingUrl
 }
@@ -15,8 +26,8 @@ final class OpenVideoPlayerAction {
     var isPlayerOpen: Bool = false
     private var player: AVPlayer? = nil
     private var currentVideo: Video? = nil
+    private var loadingViewController: UIHostingController<LoadingView>?
 
-    // Expose player through a computed property
     var currentPlayer: AVPlayer? {
         return player
     }
@@ -24,6 +35,11 @@ final class OpenVideoPlayerAction {
     @MainActor
     public func callAsFunction(id: String?) async {
         guard let id else { return }
+        
+        await MainActor.run {
+            showLoadingScreen()
+        }
+
         try? await playVideo(withId: id)
     }
 
@@ -46,7 +62,27 @@ final class OpenVideoPlayerAction {
 
         await MainActor.run {
             isPlayerOpen = true
+            hideLoadingScreen()
         }
+    }
+    
+    private func showLoadingScreen() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let window = windowScene.windows.first
+            let loadingView = LoadingView()
+
+            if let rootViewController = window?.rootViewController {
+                let loadingViewController = UIHostingController(rootView: loadingView)
+                loadingViewController.view.backgroundColor = .clear
+                rootViewController.present(loadingViewController, animated: false, completion: nil)
+            }
+        }
+    }
+    
+    private func hideLoadingScreen() {
+        print("hideLoadingScreen")
+        loadingViewController?.dismiss(animated: false, completion: nil)
+        loadingViewController = nil
     }
 
     private func createPlayerItem(for video: Video) throws -> AVPlayerItem {
