@@ -5,17 +5,7 @@ import Foundation
 import InvidiousKit
 import MediaPlayer
 import Observation
-
-struct LoadingView: View {
-    var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            ProgressView("Loading...")
-                .progressViewStyle(CircularProgressViewStyle())
-                .foregroundColor(.white)
-        }
-    }
-}
+import Combine
 
 enum VideoPlaybackError: LocalizedError {
     case missingUrl
@@ -24,9 +14,10 @@ enum VideoPlaybackError: LocalizedError {
 @Observable
 final class OpenVideoPlayerAction {
     var isPlayerOpen: Bool = false
+    var isLoading: Bool = false
     private var player: AVPlayer? = nil
     private var currentVideo: Video? = nil
-    private var loadingViewController: UIHostingController<LoadingView>?
+    private var statusObserver: AnyCancellable?
 
     var currentPlayer: AVPlayer? {
         return player
@@ -37,7 +28,7 @@ final class OpenVideoPlayerAction {
         guard let id else { return }
         
         await MainActor.run {
-            showLoadingScreen()
+            isLoading = true
         }
 
         try? await playVideo(withId: id)
@@ -47,6 +38,8 @@ final class OpenVideoPlayerAction {
         isPlayerOpen = false
         player?.pause()
         player = nil
+        statusObserver?.cancel()
+        statusObserver = nil
     }
 
     @MainActor
@@ -56,33 +49,27 @@ final class OpenVideoPlayerAction {
 
         player = AVPlayer(playerItem: playerItem)
         player?.allowsExternalPlayback = true
-        player?.play()
+
+        // Use Combine to observe the status of the AVPlayerItem
+        statusObserver = playerItem.publisher(for: \.status)
+            .sink { [weak self] status in
+                switch status {
+                case .readyToPlay:
+                    self?.player?.play()
+                    self?.isLoading = false // Hide the loading screen
+                case .failed:
+                    // Handle error
+                    self?.isLoading = false // Hide the loading screen
+                default:
+                    break
+                }
+            }
 
         updateNowPlayingInfo(with: video)
 
         await MainActor.run {
             isPlayerOpen = true
-            hideLoadingScreen()
         }
-    }
-    
-    private func showLoadingScreen() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            let window = windowScene.windows.first
-            let loadingView = LoadingView()
-
-            if let rootViewController = window?.rootViewController {
-                let loadingViewController = UIHostingController(rootView: loadingView)
-                loadingViewController.view.backgroundColor = .clear
-                rootViewController.present(loadingViewController, animated: false, completion: nil)
-            }
-        }
-    }
-    
-    private func hideLoadingScreen() {
-        print("hideLoadingScreen")
-        loadingViewController?.dismiss(animated: false, completion: nil)
-        loadingViewController = nil
     }
 
     private func createPlayerItem(for video: Video) throws -> AVPlayerItem {

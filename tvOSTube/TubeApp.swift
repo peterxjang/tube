@@ -22,21 +22,26 @@ struct TubeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            switch hasValidInstance {
-            case .some(true):
-                RootView()
-                    .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
-                        playerState.isPlayerOpen = false
-                    } content: {
-                        playerView
-                    }
-            case .some(false):
-                OnboardingView(hasValidInstance: $hasValidInstance)
-            case .none:
-                ProgressView()
-                    .task {
-                        await validateInstance()
-                    }
+            ZStack {
+                switch hasValidInstance {
+                case .some(true):
+                    RootView()
+                        .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
+                            playerState.isPlayerOpen = false
+                        } content: {
+                            playerView
+                        }
+                case .some(false):
+                    OnboardingView(hasValidInstance: $hasValidInstance)
+                case .none:
+                    ProgressView()
+                        .task {
+                            await validateInstance()
+                        }
+                }
+                if playerState.isLoading {
+                    LoadingView()
+                }
             }
         }
         .environment(playerState)
