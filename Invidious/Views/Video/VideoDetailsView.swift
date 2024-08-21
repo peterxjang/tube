@@ -63,10 +63,7 @@ struct VideoDetailsView: View {
                                 Text("Add to Queue")
                             }
                         })
-                }
-                #if !os(tvOS)
-                .listStyle(.inset)
-                #endif
+                }.listStyle(.inset)
             }
         }
     }

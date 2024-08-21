@@ -49,7 +49,6 @@
 		AC1FE1D02C1D15AD0084AB66 /* MessageBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132FD82ACCBB5400FFFDFF /* MessageBlock.swift */; };
 		AC1FE1D12C1D15BD0084AB66 /* FollowedChannelFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3640D2AD060C700AB2696 /* FollowedChannelFeedView.swift */; };
 		AC1FE1D22C1D15BD0084AB66 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
-		AC1FE1D32C1D15D20084AB66 /* HorizontalSwiperVideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3640B2AD060A200AB2696 /* HorizontalSwiperVideoCard.swift */; };
 		AC1FE1D42C1D15FA0084AB66 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D302A9BDAD70023980B /* ThumbnailView.swift */; };
 		AC1FE1D52C1D16AC0084AB66 /* VideoThumbnailTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9282873F2AA5647A00BEE10C /* VideoThumbnailTag.swift */; };
 		AC1FE1DB2C1D19BD0084AB66 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D342A9C36440023980B /* ImageView.swift */; };
@@ -77,6 +76,7 @@
 		ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E0D1F2A9BA58E0023980B /* ContentGridView.swift */; };
 		ACB32E982C2265F300C540BB /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E972C2265F300C540BB /* VideoView.swift */; };
 		ACD1C1A72C7560CC00DD0F57 /* TubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD1C1A62C7560CC00DD0F57 /* TubeApp.swift */; };
+		ACD1C1A92C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD1C1A82C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift */; };
 		ACF7FD812C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
 		ACF7FD8B2C1CB26200C9EDB9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */; };
 		ACF7FD8D2C1CB26400C9EDB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */; };
@@ -165,6 +165,7 @@
 		ACB32E932C21CD0600C540BB /* ChannelVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelVideosView.swift; sourceTree = "<group>"; };
 		ACB32E972C2265F300C540BB /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		ACD1C1A62C7560CC00DD0F57 /* TubeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TubeApp.swift; sourceTree = "<group>"; };
+		ACD1C1A82C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSwiperVideoCard.swift; sourceTree = "<group>"; };
 		ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedChannelsCombinedView.swift; sourceTree = "<group>"; };
 		ACF7FD862C1CB26200C9EDB9 /* tvOSTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOSTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -385,6 +386,7 @@
 				ACB32E7F2C2068A600C540BB /* SearchView.swift */,
 				ACB32E812C20715200C540BB /* SearchResultsView.swift */,
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
+				ACD1C1A82C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift */,
 				ACB32E972C2265F300C540BB /* VideoView.swift */,
 				ACB32E852C20B14300C540BB /* ChannelCard.swift */,
 				ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */,
@@ -638,7 +640,6 @@
 				ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */,
 				ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */,
 				AC4C01DD2C6543EE00513555 /* PlaylistView.swift in Sources */,
-				AC1FE1D32C1D15D20084AB66 /* HorizontalSwiperVideoCard.swift in Sources */,
 				ACB32E8C2C21BE9B00C540BB /* ChannelView.swift in Sources */,
 				ACF7FD8B2C1CB26200C9EDB9 /* ContentView.swift in Sources */,
 				ACF7FDB42C1CB58300C9EDB9 /* Following.swift in Sources */,
@@ -658,6 +659,7 @@
 				AC4C01D92C652C4500513555 /* PlaylistItemView.swift in Sources */,
 				ACB32E842C20900000C540BB /* VideoCard.swift in Sources */,
 				AC1FE1D02C1D15AD0084AB66 /* MessageBlock.swift in Sources */,
+				ACD1C1A92C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift in Sources */,
 				AC1FE1F02C1F28650084AB66 /* SettingsView.swift in Sources */,
 				ACB32E802C2068A700C540BB /* SearchView.swift in Sources */,
 				AC1FE1DC2C1D19D30084AB66 /* FollowButton.swift in Sources */,

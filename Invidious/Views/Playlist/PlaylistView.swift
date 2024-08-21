@@ -56,9 +56,7 @@ struct PlaylistView: View {
         }.toolbar {
             if let url = URL(string: "https://youtube.com/playlist?list=\(model.playlistId)") {
                 ToolbarItem {
-                    #if !os(tvOS)
                     ShareLink(item: url)
-                    #endif
                 }
             } else {
                 ToolbarItem {

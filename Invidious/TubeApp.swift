@@ -33,9 +33,7 @@ struct TubeApp: App {
                     } content: {
                         playerView
                     }
-                    #if !os(tvOS)
                     .statusBar(hidden: false)
-                    #endif
                 #endif
             case .some(false):
                 OnboardingView(hasValidInstance: $hasValidInstance)

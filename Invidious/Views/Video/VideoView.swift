@@ -41,20 +41,15 @@ struct VideoView: View {
                         showingQueue = true
                     } label: {
                         Label("Queue", systemImage: "list.and.film")
-                    }
-                    #if !os(tvOS)
-                    .popover(isPresented: $showingQueue) {
+                    }.popover(isPresented: $showingQueue) {
                         VideoQueueListView()
                             .frame(minWidth: 300, minHeight: 200)
                     }
-                    #endif
                 }
                 
                 if let video = queue.current, let url = URL(string: "https://youtube.com/watch?v=\(video.videoId)") {
                     ToolbarItem {
-                        #if !os(tvOS)
                         ShareLink(video.title, item: url)
-                        #endif
                     }
                 } else {
                     ToolbarItem {
@@ -72,12 +67,11 @@ struct VideoView: View {
                     }
                 }
             }
-        #if !os(macOS) && !os(tvOS)
+        #if !os(macOS)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
         #endif
-        #if !os(tvOS)
             .inspector(isPresented: $model.showingInfo) {
                 if let video = queue.current {
                     VideoDetailsView(video: video)
@@ -85,7 +79,6 @@ struct VideoView: View {
                     Text("No video playing.")
                 }
             }
-        #endif
     }
 }
 

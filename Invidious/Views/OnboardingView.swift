@@ -95,9 +95,9 @@ struct OnboardingView: View {
                     ProgressView().opacity(model.loading ? 1 : 0)
                 }.opacity(model.instance.isEmpty ? 0 : 1)
                 TextField("Invidious Instance", text: $model.instance)
-                    #if !os(tvOS)
+                #if !os(tvOS)
                     .textFieldStyle(.roundedBorder)
-                    #endif
+                #endif
                     .textContentType(.URL)
                     .autocorrectionDisabled()
                 #if !os(macOS)
@@ -125,5 +125,4 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView(hasValidInstance: .constant(nil))
-        .environment(Settings())
 }

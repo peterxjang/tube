@@ -4,6 +4,7 @@ import SwiftUI
 struct VideoMiniplayerView: View {
     @Environment(OpenVideoPlayerAction.self) var openPlayer
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.openWindow) var openWindow
     var queue: VideoQueue
 
     var body: some View {
@@ -50,7 +51,7 @@ struct VideoMiniplayerView: View {
             .tint(.primary)
             .onTapGesture {
                 Task {
-                    await openPlayer(id: nil)
+                    await openPlayer(id: nil, openWindow: openWindow)
                 }
             }.contextMenu(menuItems: {
                 Button {

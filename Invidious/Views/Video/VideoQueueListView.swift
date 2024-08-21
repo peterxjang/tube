@@ -10,17 +10,12 @@ struct VideoQueueListView: View {
             } label: {
                 VideoListItem(title: entry.info.title, author: entry.info.author, thumbnails: entry.info.videoThumbnails)
             }.buttonStyle(.plain)
-            #if !os(tvOS)
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button("Delete", role: .destructive) {
                         queue.remove(video: entry)
                     }
                 }
-            #endif
-        }
-        #if !os(tvOS)
-        .listStyle(.inset)
-        #endif
+        }.listStyle(.inset)
     }
 }
 

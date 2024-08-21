@@ -8,7 +8,6 @@ struct HorizontalSwiperVideoCard: View {
     var published: String
     var thumbnails: [ThumbnailObject]
     @Environment(OpenVideoPlayerAction.self) var openPlayer
-    @Environment(\.openWindow) var openWindow
 
     private var formattedDuration: String {
         (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
@@ -40,7 +39,7 @@ struct HorizontalSwiperVideoCard: View {
     @MainActor
     func action() {
         Task {
-            await openPlayer(id: id, openWindow: openWindow)
+            await openPlayer(id: id)
         }
     }
 }
