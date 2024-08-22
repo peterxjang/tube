@@ -14,6 +14,8 @@ struct VideoCard: View {
     var duration: Int
     var published: String
     var thumbnails: [ThumbnailObject]
+    var author: String
+    var viewCount: Int
     @Environment(OpenVideoPlayerAction.self) var openPlayer
 
     private var formattedDuration: String {
@@ -26,6 +28,8 @@ struct VideoCard: View {
         duration = videoObject.lengthSeconds
         published = videoObject.publishedText
         thumbnails = videoObject.videoThumbnails
+        author = videoObject.author
+        viewCount = videoObject.viewCount
     }
 
     var body: some View {
@@ -38,8 +42,9 @@ struct VideoCard: View {
                     ThumbnailView(width: width, height: height, radius: 8.0, thumbnails: thumbnails)
                     VideoThumbnailTag(self.formattedDuration)
                 }.frame(width: width, height: height)
-                Text(title).lineLimit(1).font(.callout)
-                Text(published).lineLimit(1).foregroundStyle(.secondary).font(.callout)
+                Text(title).lineLimit(2, reservesSpace: true).font(.headline)
+                Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
+                Text("\(published)  |  \(viewCount) views").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
         }
         .buttonStyle(.plain)
