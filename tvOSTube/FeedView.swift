@@ -38,7 +38,7 @@ struct FeedView: View {
                         }
                     }
                     .onAppear {
-                        if !hasLoadedOnce { // Check if videos have already been loaded
+                        if !hasLoadedOnce {
                             Task {
                                 await fetchCombinedVideos()
                             }
@@ -54,20 +54,25 @@ struct FeedView: View {
         do {
             var allVideos: [VideoObject] = []
             let oneMonthAgo = Date().addingTimeInterval(-30 * 24 * 60 * 60)
-
-            for channel in channels {
-                let result = try await TubeApp.client.videos(for: channel.id, continuation: nil)
-                let recentVideos = result.videos.filter { video in
-                    let publishedDate = Date(timeIntervalSince1970: TimeInterval(video.published))
-                    return publishedDate >= oneMonthAgo
+            try await withThrowingTaskGroup(of: [VideoObject].self) { group in
+                for channel in channels {
+                    group.addTask {
+                        let result = try await TubeApp.client.videos(for: channel.id, continuation: nil)
+                        let recentVideos = result.videos.filter { video in
+                            let publishedDate = Date(timeIntervalSince1970: TimeInterval(video.published))
+                            return publishedDate >= oneMonthAgo
+                        }
+                        return recentVideos
+                    }
                 }
-                allVideos.append(contentsOf: recentVideos)
-                loadedChannelsCount += 1
-                combinedVideos = allVideos.sorted(by: { $0.published > $1.published })
+                for try await recentVideos in group {
+                    allVideos.append(contentsOf: recentVideos)
+                    loadedChannelsCount += 1
+                    combinedVideos = allVideos.sorted(by: { $0.published > $1.published })
+                }
             }
-            
             isLoading = false
-            hasLoadedOnce = true // Set the flag to true after loading
+            hasLoadedOnce = true
         } catch {
             print("Error fetching videos: \(error)")
             isLoading = false
