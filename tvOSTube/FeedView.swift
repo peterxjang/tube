@@ -8,7 +8,9 @@ struct FeedView: View {
     @Query(sort: \FollowedChannel.name) var channels: [FollowedChannel]
     @State private var combinedVideos: [VideoObject] = []
     @State private var isLoading: Bool = true
-
+    @State private var loadedChannelsCount: Int = 0
+    @State private var hasLoadedOnce: Bool = false // New flag to prevent reloading
+    
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
@@ -20,7 +22,9 @@ struct FeedView: View {
                 } else {
                     VStack(alignment: .leading) {
                         if isLoading {
-                            ProgressView()
+                            ProgressView(value: Double(loadedChannelsCount), total: Double(channels.count))
+                                .padding()
+                            Text("Loaded \(loadedChannelsCount) out of \(channels.count) channels")
                                 .padding()
                         } else if combinedVideos.isEmpty {
                             MessageBlock(title: "No Videos", message: "No videos available from followed channels.")
@@ -33,8 +37,12 @@ struct FeedView: View {
                             }
                         }
                     }
-                    .task {
-                        await fetchCombinedVideos()
+                    .onAppear {
+                        if !hasLoadedOnce { // Check if videos have already been loaded
+                            Task {
+                                await fetchCombinedVideos()
+                            }
+                        }
                     }
                 }
             }
@@ -45,24 +53,21 @@ struct FeedView: View {
     private func fetchCombinedVideos() async {
         do {
             var allVideos: [VideoObject] = []
-            
-            // Calculate the date one month ago from today
-            let oneMonthAgo = Date().addingTimeInterval(-30 * 24 * 60 * 60) // Roughly 30 days ago
+            let oneMonthAgo = Date().addingTimeInterval(-30 * 24 * 60 * 60)
 
             for channel in channels {
                 let result = try await TubeApp.client.videos(for: channel.id, continuation: nil)
-                // Filter videos to include only those published within the last month
                 let recentVideos = result.videos.filter { video in
-                    // Convert Unix timestamp to Date
                     let publishedDate = Date(timeIntervalSince1970: TimeInterval(video.published))
                     return publishedDate >= oneMonthAgo
                 }
                 allVideos.append(contentsOf: recentVideos)
+                loadedChannelsCount += 1
+                combinedVideos = allVideos.sorted(by: { $0.published > $1.published })
             }
             
-            // Sort the filtered videos by their published date
-            combinedVideos = allVideos.sorted(by: { $0.published > $1.published })
             isLoading = false
+            hasLoadedOnce = true // Set the flag to true after loading
         } catch {
             print("Error fetching videos: \(error)")
             isLoading = false
