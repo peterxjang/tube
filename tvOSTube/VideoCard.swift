@@ -1,10 +1,3 @@
-//
-//  VideoCard.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/17/24.
-//
-
 import SwiftUI
 import InvidiousKit
 
@@ -34,6 +27,17 @@ struct VideoCard: View {
         viewCountText = videoObject.viewCountText
     }
 
+    init(id: String, title: String, duration: Int, publishedText: String = "", published: Int64 = 0, thumbnails: [ThumbnailObject], author: String, viewCountText: String = "") {
+        self.id = id
+        self.title = title
+        self.duration = duration
+        self.publishedText = publishedText
+        self.published = published
+        self.thumbnails = thumbnails
+        self.author = author
+        self.viewCountText = viewCountText
+    }
+
     var body: some View {
         let width = 500.0
         let height = width / 1.5
@@ -46,7 +50,9 @@ struct VideoCard: View {
                 }.frame(width: width, height: height)
                 Text(title).lineLimit(2, reservesSpace: true).font(.headline)
                 Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
-                Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
+                if !publishedText.isEmpty && !viewCountText.isEmpty {
+                    Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
+                }
             }
         }
         .buttonStyle(.plain)

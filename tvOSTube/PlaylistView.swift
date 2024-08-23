@@ -35,14 +35,13 @@ struct PlaylistView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 50) {
                 ForEach(model.videos, id: \.videoId) { video in
-                    VideoGridItem(
+                    VideoCard(
                         id: video.videoId,
                         title: video.title,
-                        author: video.author ?? "Unknown Channel",
-                        authorId: nil,
                         duration: video.lengthSeconds,
-                        published: "",
-                        thumbnails: video.videoThumbnails
+                        published: 0,
+                        thumbnails: video.videoThumbnails,
+                        author: video.author ?? "Unknown Channel"
                     )
                     .padding(30)
                 }

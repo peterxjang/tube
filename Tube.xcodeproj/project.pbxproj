@@ -63,7 +63,6 @@
 		AC4C01D72C652BDB00513555 /* ChannelPlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */; };
 		AC4C01D92C652C4500513555 /* PlaylistItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01D82C652C4500513555 /* PlaylistItemView.swift */; };
 		AC4C01DD2C6543EE00513555 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01DC2C6543EE00513555 /* PlaylistView.swift */; };
-		AC4C01DF2C6BF5D600513555 /* VideoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01DE2C6BF5D600513555 /* VideoGridItem.swift */; };
 		AC4C01E72C75349400513555 /* OpenVideoPlayerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01E62C75349400513555 /* OpenVideoPlayerAction.swift */; };
 		ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E7D2C1FDD7E00C540BB /* RootView.swift */; };
 		ACB32E802C2068A700C540BB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB32E7F2C2068A600C540BB /* SearchView.swift */; };
@@ -156,7 +155,6 @@
 		AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlaylistsView.swift; sourceTree = "<group>"; };
 		AC4C01D82C652C4500513555 /* PlaylistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemView.swift; sourceTree = "<group>"; };
 		AC4C01DC2C6543EE00513555 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
-		AC4C01DE2C6BF5D600513555 /* VideoGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridItem.swift; sourceTree = "<group>"; };
 		AC4C01E62C75349400513555 /* OpenVideoPlayerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVideoPlayerAction.swift; sourceTree = "<group>"; };
 		ACB32E7D2C1FDD7E00C540BB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ACB32E7F2C2068A600C540BB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -390,7 +388,6 @@
 				AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */,
 				AC4C01D82C652C4500513555 /* PlaylistItemView.swift */,
 				AC4C01DC2C6543EE00513555 /* PlaylistView.swift */,
-				AC4C01DE2C6BF5D600513555 /* VideoGridItem.swift */,
 				ACB32E7F2C2068A600C540BB /* SearchView.swift */,
 				ACB32E812C20715200C540BB /* SearchResultsView.swift */,
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
@@ -664,7 +661,6 @@
 				AC13D7462C76253100EDA9A7 /* LoadingView.swift in Sources */,
 				AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */,
 				ACB32E822C20715200C540BB /* SearchResultsView.swift in Sources */,
-				AC4C01DF2C6BF5D600513555 /* VideoGridItem.swift in Sources */,
 				AC4C01E72C75349400513555 /* OpenVideoPlayerAction.swift in Sources */,
 				AC4C01D92C652C4500513555 /* PlaylistItemView.swift in Sources */,
 				ACB32E842C20900000C540BB /* VideoCard.swift in Sources */,
