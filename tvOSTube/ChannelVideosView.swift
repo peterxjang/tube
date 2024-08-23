@@ -67,7 +67,7 @@ struct ChannelVideosView: View {
     var model: ChannelVideosViewModel
 
     var body: some View {
-        LazyVStack {
+        VStack {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 100) {
                 if let videos = model.videos {
                     if videos.isEmpty {
