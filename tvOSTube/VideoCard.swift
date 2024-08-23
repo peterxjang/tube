@@ -12,10 +12,11 @@ struct VideoCard: View {
     var id: String
     var title: String
     var duration: Int
-    var published: String
+    var publishedText: String
+    var published: Int64
     var thumbnails: [ThumbnailObject]
     var author: String
-    var viewCount: Int
+    var viewCountText: String
     @Environment(OpenVideoPlayerAction.self) var openPlayer
 
     private var formattedDuration: String {
@@ -26,10 +27,11 @@ struct VideoCard: View {
         id = videoObject.videoId
         title = videoObject.title
         duration = videoObject.lengthSeconds
-        published = videoObject.publishedText
+        published = videoObject.published
+        publishedText = videoObject.publishedText
         thumbnails = videoObject.videoThumbnails
         author = videoObject.author
-        viewCount = videoObject.viewCount
+        viewCountText = videoObject.viewCountText
     }
 
     var body: some View {
@@ -44,7 +46,7 @@ struct VideoCard: View {
                 }.frame(width: width, height: height)
                 Text(title).lineLimit(2, reservesSpace: true).font(.headline)
                 Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
-                Text("\(published)  |  \(viewCount) views").lineLimit(1).foregroundStyle(.secondary).font(.caption)
+                Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
         }
         .buttonStyle(.plain)

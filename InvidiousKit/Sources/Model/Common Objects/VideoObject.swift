@@ -11,6 +11,7 @@ public struct VideoObject: Hashable, Decodable {
     public var videoThumbnails: [ThumbnailObject]
     public var description: String
     public var viewCount: Int
+    public var viewCountText: String
     public var lengthSeconds: Int
     public var published: Int64
     public var publishedText: String
