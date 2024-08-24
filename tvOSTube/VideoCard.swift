@@ -40,7 +40,7 @@ struct VideoCard: View {
 
     var body: some View {
         let width = 500.0
-        let height = width / 1.5
+        let height = width / 1.8
         VStack(alignment: .leading) {
             Button(action: action) {
                 ZStack {
@@ -57,7 +57,7 @@ struct VideoCard: View {
             if !publishedText.isEmpty && !viewCountText.isEmpty {
                 Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
-        }
+        }.frame(width: width)
     }
 
     @MainActor
