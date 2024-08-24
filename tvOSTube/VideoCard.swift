@@ -13,7 +13,8 @@ struct VideoCard: View {
     @Environment(OpenVideoPlayerAction.self) var openPlayer
 
     private var formattedDuration: String {
-        (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
+        let result = (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
+        return result == "0" ? "" : result
     }
 
     init(videoObject: VideoObject) {
