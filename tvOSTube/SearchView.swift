@@ -1,10 +1,3 @@
-//
-//  SearchView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/17/24.
-//
-
 import InvidiousKit
 import Observation
 import SwiftData
@@ -16,15 +9,9 @@ struct SearchView: View {
 
     var body: some View {
         VStack {
-            TextField("Search...", text: $search)
             SearchResultsView(query: $search)
-                .padding()
-            Spacer()
+                .padding(.top, 100)
+                .searchable(text: $search)
         }
-        .padding()
     }
 }
-
-//#Preview {
-//    SearchView()
-//}
