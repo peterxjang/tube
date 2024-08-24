@@ -41,22 +41,23 @@ struct VideoCard: View {
     var body: some View {
         let width = 500.0
         let height = width / 1.5
-        
-        Button(action: action) {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            Button(action: action) {
                 ZStack {
                     ThumbnailView(width: width, height: height, radius: 8.0, thumbnails: thumbnails)
                     VideoThumbnailTag(self.formattedDuration)
-                }.frame(width: width, height: height)
-                Text(title).lineLimit(2, reservesSpace: true).font(.headline)
-                Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
-                if !publishedText.isEmpty && !viewCountText.isEmpty {
-                    Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
                 }
+                .frame(width: width, height: height)
+            }
+            .buttonStyle(.card)
+            .frame(width: width)
+
+            Text(title).lineLimit(2, reservesSpace: true).font(.headline)
+            Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
+            if !publishedText.isEmpty && !viewCountText.isEmpty {
+                Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
         }
-        .buttonStyle(.plain)
-        .frame(width: width)
     }
 
     @MainActor

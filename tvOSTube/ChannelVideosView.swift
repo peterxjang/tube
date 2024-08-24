@@ -1,10 +1,3 @@
-//
-//  ChannelVideosView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/18/24.
-//
-
 import InvidiousKit
 import Observation
 import SwiftUI
@@ -67,30 +60,24 @@ struct ChannelVideosView: View {
     var model: ChannelVideosViewModel
 
     var body: some View {
-        VStack {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 100) {
-                if let videos = model.videos {
-                    if videos.isEmpty {
-                        Text("No Videos")
-                    } else {
-                        ForEach(videos, id: \.videoId) { video in
-                            VideoCard(videoObject: video)
-                        }
+        if let videos = model.videos {
+            if videos.isEmpty {
+                Text("No Videos")
+            } else {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 50) {
+                    ForEach(videos, id: \.videoId) { video in
+                        VideoCard(videoObject: video)
                     }
                 }
             }
-            if !model.done {
-                ProgressView()
-                    .task(id: model.list) {
-                        await model.load()
-                    }.refreshable {
-                        await model.load()
-                    }
-            }
-        }.padding().asyncTaskOverlay(error: model.error, isLoading: model.loading)
+        }
+        if !model.done {
+            ProgressView()
+                .task(id: model.list) {
+                    await model.load()
+                }.refreshable {
+                    await model.load()
+                }
+        }
     }
 }
-
-// #Preview {
-//    ChannelVideosView()
-// }
