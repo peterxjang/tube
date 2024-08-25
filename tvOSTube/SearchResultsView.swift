@@ -1,10 +1,3 @@
-//
-//  SearchResultsView.swift
-//  tvOSTube
-//
-//  Created by Peter Jang on 6/17/24.
-//
-
 import InvidiousKit
 import SwiftUI
 
@@ -14,9 +7,11 @@ class SearchResultsViewModel {
     var done: Bool = false
     var page: Int32 = 0
     var task: Task<Void, Never>?
+    var isSearching: Bool = false
 
     func handleUpdate(query: String, appending: Bool = false) {
         task?.cancel()
+        isSearching = true // Set to true when the search begins
         task = Task {
             do {
                 let response = try await TubeApp.client.search(query: query, page: page)
@@ -27,9 +22,11 @@ class SearchResultsViewModel {
                     } else {
                         results = response
                     }
+                    isSearching = false
                 }
             } catch {
                 print(error)
+                isSearching = false
             }
             task = nil
         }
@@ -41,34 +38,36 @@ class SearchResultsViewModel {
     }
 }
 
-
 struct SearchResultsView: View {
     @Binding var query: String
     var model = SearchResultsViewModel()
-    
+
     var body: some View {
-        if !query.isEmpty {
-            ScrollView(.horizontal) {
-                LazyHGrid(rows: [.init(.flexible(minimum: 600, maximum: 600))], alignment: .top, spacing: 100.0) {
-                    ForEach(model.results) { result in
-                        switch result {
-                        case .video(let video):
-                            VideoCard(videoObject: video)
-                        case .channel(let channel):
-                             ChannelCard(channel: channel)
-                        case .playlist(let playlist):
-                            PlaylistItemView(id: playlist.playlistId, title: playlist.title, author: playlist.author, videoCount: playlist.videoCount)
-                        }
-                    }
-                }.padding(50)
+        VStack {
+            if model.isSearching {
+                ProgressView("Searching...")
+                    .padding(.top, 200)
             }
-            .onChange(of: query) { _, _ in
-                model.handleUpdate(query: query)
+
+            if !query.isEmpty {
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [.init(.flexible(minimum: 600, maximum: 600))], alignment: .top, spacing: 100.0) {
+                        ForEach(model.results) { result in
+                            switch result {
+                            case .video(let video):
+                                VideoCard(videoObject: video)
+                            case .channel(let channel):
+                                ChannelCard(channel: channel)
+                            case .playlist(let playlist):
+                                PlaylistItemView(id: playlist.playlistId, title: playlist.title, author: playlist.author, videoCount: playlist.videoCount)
+                            }
+                        }
+                    }.padding(50)
+                }
+                .onChange(of: query) { _, _ in
+                    model.handleUpdate(query: query)
+                }
             }
         }
     }
 }
-
-// #Preview {
-//    SearchResultsView()
-// }
