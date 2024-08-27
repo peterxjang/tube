@@ -34,9 +34,8 @@ struct RootView: View {
                 }
                 .tag(3)
         }
-        .onChange(of: selectedTab) { newValue in
-            if newValue == 1 {
-                // Reset the SubscriptionsView when the tab is selected
+        .onChange(of: selectedTab) {
+            if selectedTab == 1 {
                 resetSubscriptionsView.toggle()
             }
         }
