@@ -72,14 +72,5 @@ struct ChannelView: View {
         .refreshable {
             await model.load()
         }
-        .toolbar {
-            ToolbarItem {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Label("", systemImage: "arrow.backward")
-                }
-            }
-        }
     }
 }
