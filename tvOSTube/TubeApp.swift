@@ -8,6 +8,7 @@ struct TubeApp: App {
     @Bindable var playerState: OpenVideoPlayerAction
     var settings = Settings()
     @State var hasValidInstance: Bool? = nil
+    @StateObject private var navigationManager = NavigationManager()
 
     init() {
         playerState = OpenVideoPlayerAction()
@@ -31,6 +32,7 @@ struct TubeApp: App {
                         } content: {
                             playerView
                         }
+                        .environmentObject(navigationManager)
                 case .some(false):
                     OnboardingView(hasValidInstance: $hasValidInstance)
                 case .none:

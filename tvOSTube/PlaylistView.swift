@@ -41,7 +41,8 @@ struct PlaylistView: View {
                         duration: video.lengthSeconds,
                         published: 0,
                         thumbnails: video.videoThumbnails,
-                        author: video.author ?? "Unknown Channel"
+                        author: video.author ?? "Unknown Channel",
+                        authorId: "UNAVAILABLE"
                     )
                     .padding(30)
                 }

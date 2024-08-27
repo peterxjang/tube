@@ -10,6 +10,7 @@ enum NavigationDestination: Hashable {
 struct RootView: View {
     @State private var selectedTab: Int = 0
     @State private var resetSubscriptionsView: Bool = false
+    @EnvironmentObject var navigationManager: NavigationManager
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -38,6 +39,9 @@ struct RootView: View {
             if selectedTab == 1 {
                 resetSubscriptionsView.toggle()
             }
+        }
+        .sheet(item: $navigationManager.selectedChannelId) { identifiableChannelId in
+            ChannelView(model: ChannelViewModel(channelId: identifiableChannelId.id))
         }
     }
 }

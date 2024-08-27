@@ -48,6 +48,7 @@
 		AC13D7462C76253100EDA9A7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7452C76253100EDA9A7 /* LoadingView.swift */; };
 		AC13D7482C775F7100EDA9A7 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7472C775F7100EDA9A7 /* ThumbnailView.swift */; };
 		AC13D74A2C77618600EDA9A7 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */; };
+		AC13D74C2C7E5A5200EDA9A7 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D74B2C7E5A5200EDA9A7 /* NavigationManager.swift */; };
 		AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B364092AD05F6500AB2696 /* OnboardingView.swift */; };
 		AC1FE1D02C1D15AD0084AB66 /* MessageBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132FD82ACCBB5400FFFDFF /* MessageBlock.swift */; };
 		AC1FE1D12C1D15BD0084AB66 /* FollowedChannelFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3640D2AD060C700AB2696 /* FollowedChannelFeedView.swift */; };
@@ -152,6 +153,7 @@
 		AC13D7452C76253100EDA9A7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		AC13D7472C775F7100EDA9A7 /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
+		AC13D74B2C7E5A5200EDA9A7 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlaylistsView.swift; sourceTree = "<group>"; };
 		AC4C01D82C652C4500513555 /* PlaylistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemView.swift; sourceTree = "<group>"; };
 		AC4C01DC2C6543EE00513555 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
@@ -290,7 +292,6 @@
 				92931D022A9DA308004993D5 /* README.md */,
 				923B9C532A9B88920060FC9F /* Invidious */,
 				ACF7FD872C1CB26200C9EDB9 /* tvOSTube */,
-				ACF7FDA22C1CB26400C9EDB9 /* tvOSTubeUITests */,
 				923B9C522A9B88920060FC9F /* Products */,
 				923B9C702A9BA0A80060FC9F /* Frameworks */,
 			);
@@ -376,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD1C1A62C7560CC00DD0F57 /* TubeApp.swift */,
+				AC13D74B2C7E5A5200EDA9A7 /* NavigationManager.swift */,
 				AC13D7452C76253100EDA9A7 /* LoadingView.swift */,
 				ACB32E7D2C1FDD7E00C540BB /* RootView.swift */,
 				ACB32E872C20CADE00C540BB /* FeedView.swift */,
@@ -398,6 +400,7 @@
 				AC4C01E62C75349400513555 /* OpenVideoPlayerAction.swift */,
 				ACF7FD8C2C1CB26400C9EDB9 /* Assets.xcassets */,
 				ACF7FD982C1CB26400C9EDB9 /* tvOSTubeTests */,
+				ACF7FDA22C1CB26400C9EDB9 /* tvOSTubeUITests */,
 				ACF7FD8E2C1CB26400C9EDB9 /* Preview Content */,
 			);
 			path = tvOSTube;
@@ -640,6 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC13D74C2C7E5A5200EDA9A7 /* NavigationManager.swift in Sources */,
 				ACB32E882C20CADE00C540BB /* FeedView.swift in Sources */,
 				AC1FE1E52C1F27240084AB66 /* VideoListItemView.swift in Sources */,
 				ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */,
