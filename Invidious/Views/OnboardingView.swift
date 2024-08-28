@@ -23,7 +23,7 @@ final class OnboardingViewModel {
             }
             let response = await APIClient.isValidInstance(url: url)
             if response {
-                await TubeApp.client.setApiUrl(url: url)
+                TubeApp.client.setApiUrl(url: url)
             }
             await MainActor.run {
                 isInvalid = !response

@@ -7,10 +7,8 @@ struct PlaylistItemView: View {
     var author: String
     var videoCount: Int
     
-    @State private var showPlaylistView = false
-
     var body: some View {
-        Button(action: action) {
+        NavigationLink(destination: PlaylistView(model: PlaylistViewModel(playlistId: id))) {
             VStack(alignment: .leading) {
                 ZStack {
                     Group {
@@ -37,18 +35,5 @@ struct PlaylistItemView: View {
             .padding()
         }
         .buttonStyle(.plain)
-        .fullScreenCover(isPresented: $showPlaylistView) {
-            ZStack {
-                Color.black
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    PlaylistView(model: PlaylistViewModel(playlistId: id))
-                }
-            }
-        }
-    }
-    
-    func action() {
-        showPlaylistView = true
     }
 }

@@ -1,11 +1,12 @@
 import InvidiousKit
+import Observation
 import SwiftData
 import SwiftUI
 
 struct SubscriptionsView: View {
     @Query(sort: \FollowedChannel.name) var channels: [FollowedChannel]
+    @State private var selectedChannel: FollowedChannel? = nil
     @Binding var resetView: Bool
-    @EnvironmentObject var navigationManager: NavigationManager
 
     var body: some View {
         ScrollView {
@@ -18,9 +19,7 @@ struct SubscriptionsView: View {
                 } else {
                     VStack(alignment: .leading) {
                         ForEach(channels) { channel in
-                            Button(action: {
-                                navigationManager.navigateToChannel(with: channel.id)
-                            }) {
+                            NavigationLink(destination: ChannelView(model: ChannelViewModel(channelId: channel.id))) {
                                 HStack {
                                     Text(channel.name)
                                         .padding()
@@ -32,9 +31,8 @@ struct SubscriptionsView: View {
                         }
                     }
                 }
-            }
-            .padding(50)
+            }.padding(50)
         }
-        .id(resetView) // Reset the view by changing the id whenever resetView changes
+        .id(resetView)
     }
 }

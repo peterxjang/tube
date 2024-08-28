@@ -8,17 +8,9 @@ struct TubeApp: App {
     @Bindable var playerState: OpenVideoPlayerAction
     var settings = Settings()
     @State var hasValidInstance: Bool? = nil
-    @StateObject private var navigationManager = NavigationManager()
 
     init() {
         playerState = OpenVideoPlayerAction()
-    }
-
-    var playerView: some View {
-        NavigationStack {
-            VideoView(model: VideoViewModel())
-                .background(.windowBackground)
-        }
     }
 
     var body: some Scene {
@@ -26,13 +18,15 @@ struct TubeApp: App {
             ZStack {
                 switch hasValidInstance {
                 case .some(true):
-                    RootView()
-                        .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
-                            playerState.isPlayerOpen = false
-                        } content: {
-                            playerView
-                        }
-                        .environmentObject(navigationManager)
+                    NavigationStack {
+                        RootView()
+                            .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
+                                playerState.isPlayerOpen = false
+                            } content: {
+                                VideoView(model: VideoViewModel())
+                                    .background(.windowBackground)
+                            }
+                    }
                 case .some(false):
                     OnboardingView(hasValidInstance: $hasValidInstance)
                 case .none:

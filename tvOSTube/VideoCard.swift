@@ -12,7 +12,6 @@ struct VideoCard: View {
     var authorId: String
     var viewCountText: String
     @Environment(OpenVideoPlayerAction.self) var openPlayer
-    @EnvironmentObject var navigationManager: NavigationManager
 
     private var formattedDuration: String {
         let result = (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
@@ -58,9 +57,7 @@ struct VideoCard: View {
             .buttonStyle(.card)
             .frame(width: width)
             .contextMenu {
-                Button {
-                    navigationManager.navigateToChannel(with: authorId)
-                } label: {
+                NavigationLink(destination: ChannelView(model: ChannelViewModel(channelId: authorId))) {
                     Label("Go to channel", systemImage: "location.circle")
                 }
 
