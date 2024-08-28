@@ -59,7 +59,13 @@ struct SearchResultsView: View {
                             case .channel(let channel):
                                 ChannelCard(channel: channel)
                             case .playlist(let playlist):
-                                PlaylistItemView(id: playlist.playlistId, title: playlist.title, author: playlist.author, videoCount: playlist.videoCount)
+                                PlaylistItemView(
+                                    id: playlist.playlistId,
+                                    title: playlist.title,
+                                    thumbnail: playlist.playlistThumbnail,
+                                    author: playlist.author,
+                                    videoCount: playlist.videoCount
+                                )
                             }
                         }
                     }.padding(50)
