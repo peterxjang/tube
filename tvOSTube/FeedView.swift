@@ -34,6 +34,16 @@ struct FeedView: View {
                                 ForEach(combinedVideos, id: \.videoId) { video in
                                     VideoCard(videoObject: video)
                                 }
+                                Button {
+                                    loadedChannelsCount = 0
+                                    isLoading = true
+                                    Task {
+                                        await fetchCombinedVideos()
+                                    }
+                                } label: {
+                                    Label("Refresh", systemImage: "arrow.clockwise")
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
