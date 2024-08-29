@@ -22,6 +22,7 @@ struct TubeApp: App {
                         RootView()
                             .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
                                 playerState.isPlayerOpen = false
+                                playerState.isLoading = false
                             } content: {
                                 VideoView(model: VideoViewModel())
                                     .background(.windowBackground)
