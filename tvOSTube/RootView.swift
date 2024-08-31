@@ -15,7 +15,7 @@ struct RootView: View {
 
             SavedVideosView()
                 .tabItem {
-                    Text("Saved Videos")
+                    Text("Watch Later")
                 }
                 .tag(1)
 

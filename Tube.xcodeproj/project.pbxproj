@@ -50,6 +50,7 @@
 		AC13D74A2C77618600EDA9A7 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */; };
 		AC13D7592C82A4FF00EDA9A7 /* SavedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7582C82A4FF00EDA9A7 /* SavedVideo.swift */; };
 		AC13D75B2C82A68300EDA9A7 /* SavedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D75A2C82A68300EDA9A7 /* SavedVideosView.swift */; };
+		AC13D75D2C82B04400EDA9A7 /* VideoContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */; };
 		AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B364092AD05F6500AB2696 /* OnboardingView.swift */; };
 		AC1FE1D02C1D15AD0084AB66 /* MessageBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132FD82ACCBB5400FFFDFF /* MessageBlock.swift */; };
 		AC1FE1D22C1D15BD0084AB66 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
@@ -155,6 +156,7 @@
 		AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		AC13D7582C82A4FF00EDA9A7 /* SavedVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVideo.swift; sourceTree = "<group>"; };
 		AC13D75A2C82A68300EDA9A7 /* SavedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVideosView.swift; sourceTree = "<group>"; };
+		AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoContextMenu.swift; sourceTree = "<group>"; };
 		AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlaylistsView.swift; sourceTree = "<group>"; };
 		AC4C01D82C652C4500513555 /* PlaylistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemView.swift; sourceTree = "<group>"; };
 		AC4C01DC2C6543EE00513555 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				ACF7FD982C1CB26400C9EDB9 /* tvOSTubeTests */,
 				ACF7FDA22C1CB26400C9EDB9 /* tvOSTubeUITests */,
 				ACF7FD8E2C1CB26400C9EDB9 /* Preview Content */,
+				AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */,
 			);
 			path = tvOSTube;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				ACD1C1A92C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift in Sources */,
 				AC1FE1F02C1F28650084AB66 /* SettingsView.swift in Sources */,
 				ACB32E802C2068A700C540BB /* SearchView.swift in Sources */,
+				AC13D75D2C82B04400EDA9A7 /* VideoContextMenu.swift in Sources */,
 				AC13D7482C775F7100EDA9A7 /* ThumbnailView.swift in Sources */,
 				AC1FE1DC2C1D19D30084AB66 /* FollowButton.swift in Sources */,
 				ACB32E8E2C21BEFA00C540BB /* ChannelHeaderView.swift in Sources */,
