@@ -13,26 +13,32 @@ struct RootView: View {
                 }
                 .tag(0)
 
+            SavedVideosView()
+                .tabItem {
+                    Text("Saved Videos")
+                }
+                .tag(1)
+
             SubscriptionsView(resetView: $resetSubscriptionsView)
                 .tabItem {
                     Text("Subscriptions")
                 }
-                .tag(1)
+                .tag(2)
 
             SearchView()
                 .tabItem {
                     Text("Search")
                 }
-                .tag(2)
+                .tag(3)
 
             SettingsView()
                 .tabItem {
                     Text("Settings")
                 }
-                .tag(3)
+                .tag(4)
         }
         .onChange(of: selectedTab) {
-            if selectedTab == 1 {
+            if selectedTab == 2 {
                 resetSubscriptionsView.toggle()
             }
         }

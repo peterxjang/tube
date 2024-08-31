@@ -48,6 +48,8 @@
 		AC13D7462C76253100EDA9A7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7452C76253100EDA9A7 /* LoadingView.swift */; };
 		AC13D7482C775F7100EDA9A7 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7472C775F7100EDA9A7 /* ThumbnailView.swift */; };
 		AC13D74A2C77618600EDA9A7 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */; };
+		AC13D7592C82A4FF00EDA9A7 /* SavedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D7582C82A4FF00EDA9A7 /* SavedVideo.swift */; };
+		AC13D75B2C82A68300EDA9A7 /* SavedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC13D75A2C82A68300EDA9A7 /* SavedVideosView.swift */; };
 		AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B364092AD05F6500AB2696 /* OnboardingView.swift */; };
 		AC1FE1D02C1D15AD0084AB66 /* MessageBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92132FD82ACCBB5400FFFDFF /* MessageBlock.swift */; };
 		AC1FE1D22C1D15BD0084AB66 /* FollowedChannelsCombinedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7FD802C1C9FDD00C9EDB9 /* FollowedChannelsCombinedView.swift */; };
@@ -151,6 +153,8 @@
 		AC13D7452C76253100EDA9A7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		AC13D7472C775F7100EDA9A7 /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
+		AC13D7582C82A4FF00EDA9A7 /* SavedVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVideo.swift; sourceTree = "<group>"; };
+		AC13D75A2C82A68300EDA9A7 /* SavedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedVideosView.swift; sourceTree = "<group>"; };
 		AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlaylistsView.swift; sourceTree = "<group>"; };
 		AC4C01D82C652C4500513555 /* PlaylistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemView.swift; sourceTree = "<group>"; };
 		AC4C01DC2C6543EE00513555 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 				92B364072AD0594C00AB2696 /* Settings.swift */,
 				923B9C6C2A9B9B640060FC9F /* VideoQueue.swift */,
 				9282873D2AA5079800BEE10C /* OpenVideoPlayerAction.swift */,
+				AC13D7582C82A4FF00EDA9A7 /* SavedVideo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				ACD1C1A62C7560CC00DD0F57 /* TubeApp.swift */,
 				AC13D7452C76253100EDA9A7 /* LoadingView.swift */,
 				ACB32E7D2C1FDD7E00C540BB /* RootView.swift */,
+				AC13D75A2C82A68300EDA9A7 /* SavedVideosView.swift */,
 				ACB32E872C20CADE00C540BB /* FeedView.swift */,
 				AC13D7472C775F7100EDA9A7 /* ThumbnailView.swift */,
 				AC13D7492C77618600EDA9A7 /* CachedAsyncImage.swift */,
@@ -640,6 +646,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACB32E882C20CADE00C540BB /* FeedView.swift in Sources */,
+				AC13D7592C82A4FF00EDA9A7 /* SavedVideo.swift in Sources */,
 				AC1FE1E52C1F27240084AB66 /* VideoListItemView.swift in Sources */,
 				ACB32E7E2C1FDD7E00C540BB /* RootView.swift in Sources */,
 				ACB32E962C21D08E00C540BB /* ContentGridView.swift in Sources */,
@@ -656,6 +663,7 @@
 				AC1FE1D52C1D16AC0084AB66 /* VideoThumbnailTag.swift in Sources */,
 				AC1FE1E32C1F27020084AB66 /* View.swift in Sources */,
 				AC13D74A2C77618600EDA9A7 /* CachedAsyncImage.swift in Sources */,
+				AC13D75B2C82A68300EDA9A7 /* SavedVideosView.swift in Sources */,
 				ACB32E862C20B14300C540BB /* ChannelCard.swift in Sources */,
 				AC13D7462C76253100EDA9A7 /* LoadingView.swift in Sources */,
 				AC1FE1CD2C1CDB0C0084AB66 /* OnboardingView.swift in Sources */,

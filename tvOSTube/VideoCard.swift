@@ -12,6 +12,7 @@ struct VideoCard: View {
     var authorId: String
     var viewCountText: String
     @Environment(OpenVideoPlayerAction.self) var openPlayer
+    @Environment(\.modelContext) private var context
 
     private var formattedDuration: String {
         let result = (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
@@ -62,7 +63,7 @@ struct VideoCard: View {
                 }
 
                 Button {
-                    print("add to watch later")
+                    addToWatchLater()
                 } label: {
                     Label("Add to Watch Later", systemImage: "globe")
                 }
@@ -80,6 +81,29 @@ struct VideoCard: View {
     func action() {
         Task {
             await openPlayer(id: id)
+        }
+    }
+
+    private func addToWatchLater() {
+        let savedVideo = SavedVideo(
+            id: id,
+            title: title,
+            author: author,
+            published: published,
+            duration: duration,
+            quality: thumbnails[0].quality,
+            url: thumbnails[0].url,
+            width: thumbnails[0].width,
+            height: thumbnails[0].height,
+            viewCountText: viewCountText
+        )
+        context.insert(savedVideo)
+
+        do {
+            try context.save()
+            print("Video added to Watch Later")
+        } catch {
+            print("Failed to add video to Watch Later: \(error)")
         }
     }
 }
