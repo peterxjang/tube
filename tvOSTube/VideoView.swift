@@ -45,17 +45,11 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         videoView.allowsPictureInPicturePlayback = false
         videoView.player?.rate = 1.0
 
-        let playPauseTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseTap))
-        playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        let clickpadLongPress = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleClickpadLongPress))
+        clickpadLongPress.minimumPressDuration = 1.0 // 1 second long press
+        clickpadLongPress.allowedPressTypes = [NSNumber(value: UIPress.PressType.select.rawValue)]
         
-        let playPauseDoubleTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handlePlayPauseDoubleTap))
-        playPauseDoubleTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
-        playPauseDoubleTap.numberOfTapsRequired = 2
-        
-        playPauseTap.require(toFail: playPauseDoubleTap)
-        
-        videoView.view.addGestureRecognizer(playPauseTap)
-        videoView.view.addGestureRecognizer(playPauseDoubleTap)
+        videoView.view.addGestureRecognizer(clickpadLongPress)
         
         return videoView
     }
@@ -75,19 +69,13 @@ struct VideoPlayerView: UIViewControllerRepresentable {
             self.player = player
         }
 
-        @objc func handlePlayPauseTap() {
-            if player.rate == 0.0 {
-                player.play()
-            } else {
-                player.pause()
-            }
-        }
-
-        @objc func handlePlayPauseDoubleTap() {
-            if player.rate == 1.0 {
-                player.rate = 2.0
-            } else {
-                player.rate = 1.0
+        @objc func handleClickpadLongPress(gesture: UILongPressGestureRecognizer) {
+            if gesture.state == .began {
+                if player.rate == 1.0 {
+                    player.rate = 2.0
+                } else {
+                    player.rate = 1.0
+                }
             }
         }
     }
