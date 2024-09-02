@@ -19,7 +19,7 @@ struct SavedVideosView: View {
                         .font(.largeTitle)
                     ScrollView(.horizontal) {
                         LazyHGrid(rows: [.init(.flexible(minimum: 600))], alignment: .top, spacing: 70.0) {
-                            ForEach(savedVideos) { video in
+                            ForEach(savedVideos.reversed()) { video in
                                 VideoCard(
                                     id: video.id,
                                     title: video.title,
