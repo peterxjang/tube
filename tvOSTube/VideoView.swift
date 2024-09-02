@@ -7,7 +7,7 @@ import SwiftData
 struct VideoView: View {
     @Environment(OpenVideoPlayerAction.self) private var playerState
     @Environment(\.modelContext) private var context
-    @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         if let player = playerState.currentPlayer {
@@ -26,7 +26,6 @@ struct VideoView: View {
     }
 
     private func saveVideoToHistory(video: Video) {
-        let historyVideos = savedVideos.filter { $0.videoType == "history" }
         let isVideoInHistory = historyVideos.first(where: { $0.id == video.videoId }) != nil
         if !isVideoInHistory {
             let maxHistorySize = 10
@@ -37,20 +36,21 @@ struct VideoView: View {
                     context.delete(video)
                 }
             }
-            let savedVideo = SavedVideo(
+            let historyVideo = HistoryVideo(
                 id: video.videoId,
-                videoType: "history",
                 title: video.title,
                 author: video.author,
+                authorId: video.authorId,
                 published: video.published,
-                duration: Int(video.lengthSeconds),
-                quality: video.videoThumbnails.first?.quality ?? "",
-                url: video.videoThumbnails.first?.url ?? "N/A",
-                width: video.videoThumbnails.first?.width ?? 0,
-                height: video.videoThumbnails.first?.height ?? 0,
-                viewCountText: String(video.viewCount)
+                lengthSeconds: Int(video.lengthSeconds),
+                watchedSeconds: 0,
+                viewCount: Int(video.viewCount),
+                thumbnailQuality: video.videoThumbnails.first?.quality ?? "",
+                thumbnailUrl: video.videoThumbnails.first?.url ?? "N/A",
+                thumbnailWidth: video.videoThumbnails.first?.width ?? 0,
+                thumbnailHeight: video.videoThumbnails.first?.height ?? 0
             )
-            context.insert(savedVideo)
+            context.insert(historyVideo)
             do {
                 try context.save()
             } catch {
@@ -58,7 +58,6 @@ struct VideoView: View {
             }
         }
     }
-
 }
 
 struct VideoPlayerView: UIViewControllerRepresentable {

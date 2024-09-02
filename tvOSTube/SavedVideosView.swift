@@ -5,33 +5,31 @@ import InvidiousKit
 struct SavedVideosView: View {
     @Environment(\.modelContext) private var context
     @Query private var savedVideos: [SavedVideo]
+    @Query private var historyVideos: [HistoryVideo]
 
     var body: some View {
-        let bookmarkedVideos = savedVideos.filter { video in
-            return video.videoType == "bookmark"
-        }.reversed()
-        let recommendedVideos = savedVideos.filter { video in
-            return video.videoType == "recommendation"
-        }.reversed()
-        let historyVideos = savedVideos.filter { video in
-            return video.videoType == "history"
-        }.reversed()
-
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Watch Later")
                     .font(.largeTitle)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
-                        ForEach(bookmarkedVideos) { video in
+                        ForEach(savedVideos.reversed()) { video in
                             VideoCard(
                                 id: video.id,
                                 title: video.title,
                                 duration: video.duration,
                                 published: video.published,
-                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
+                                thumbnails: [
+                                    ThumbnailObject(
+                                        quality: video.thumbnailQuality,
+                                        url: video.thumbnailUrl,
+                                        width: video.thumbnailWidth,
+                                        height: video.thumbnailHeight
+                                    )
+                                ],
                                 author: video.author,
-                                authorId: "UNAVAILABLE",
+                                authorId: video.authorId,
                                 viewCountText: video.viewCountText
                             )
                         }
@@ -42,18 +40,25 @@ struct SavedVideosView: View {
                     .font(.largeTitle)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
-                        ForEach(recommendedVideos) { video in
-                            VideoCard(
-                                id: video.id,
-                                title: video.title,
-                                duration: video.duration,
-                                published: video.published,
-                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
-                                author: video.author,
-                                authorId: "UNAVAILABLE",
-                                viewCountText: video.viewCountText
-                            )
-                        }
+//                        ForEach(savedVideos.reversed()) { video in
+//                            VideoCard(
+//                                id: video.id,
+//                                title: video.title,
+//                                duration: video.duration,
+//                                published: video.published,
+//                                thumbnails: [
+//                                    ThumbnailObject(
+//                                        quality: video.thumbnailQuality,
+//                                        url: video.thumbnailUrl,
+//                                        width: video.thumbnailWidth,
+//                                        height: video.thumbnailHeight
+//                                    )
+//                                ],
+//                                author: video.author,
+//                                authorId: "UNAVAILABLE",
+//                                viewCountText: video.viewCountText
+//                            )
+//                        }
                     }.padding(20)
                 }
 
@@ -61,16 +66,23 @@ struct SavedVideosView: View {
                     .font(.largeTitle)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
-                        ForEach(historyVideos) { video in
+                        ForEach(historyVideos.reversed()) { video in
                             VideoCard(
                                 id: video.id,
                                 title: video.title,
-                                duration: video.duration,
+                                duration: video.lengthSeconds,
                                 published: video.published,
-                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
+                                thumbnails: [
+                                    ThumbnailObject(
+                                        quality: video.thumbnailQuality,
+                                        url: video.thumbnailUrl,
+                                        width: video.thumbnailWidth,
+                                        height: video.thumbnailHeight
+                                    )
+                                ],
                                 author: video.author,
-                                authorId: "UNAVAILABLE",
-                                viewCountText: video.viewCountText
+                                authorId: video.authorId,
+                                viewCountText: String(video.viewCount)
                             )
                         }
                     }.padding(20)

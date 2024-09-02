@@ -9,13 +9,13 @@ struct RootView: View {
         TabView(selection: $selectedTab) {
             FeedView()
                 .tabItem {
-                    Text("Recent Videos")
+                    Text("Feed")
                 }
                 .tag(0)
 
             SavedVideosView()
                 .tabItem {
-                    Text("Watch Later")
+                    Text("Saved")
                 }
                 .tag(1)
 

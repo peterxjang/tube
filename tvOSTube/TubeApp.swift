@@ -42,7 +42,7 @@ struct TubeApp: App {
             }
         }
         .environment(playerState)
-        .modelContainer(for: [FollowedChannel.self, SavedVideo.self])
+        .modelContainer(for: [FollowedChannel.self, SavedVideo.self, HistoryVideo.self])
         .environment(settings)
         .onChange(of: settings.invidiousInstance) {
             Task {

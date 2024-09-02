@@ -20,7 +20,7 @@ struct VideoContextMenu: View {
             Label("Go to channel", systemImage: "location.circle")
         }
 
-        let isInWatchLater = savedVideos.contains(where: { $0.id == id && $0.videoType == "bookmark" })
+        let isInWatchLater = savedVideos.contains(where: { $0.id == id })
         if isInWatchLater {
             Button {
                 removeFromWatchLater()
@@ -37,7 +37,7 @@ struct VideoContextMenu: View {
     }
 
     private func removeFromWatchLater() {
-        if let index = savedVideos.firstIndex(where: { $0.id == id && $0.videoType == "bookmark" }) {
+        if let index = savedVideos.firstIndex(where: { $0.id == id }) {
             context.delete(savedVideos[index])
         }
     }
@@ -45,16 +45,16 @@ struct VideoContextMenu: View {
     private func addToWatchLater() {
         let savedVideo = SavedVideo(
             id: id,
-            videoType: "bookmark",
             title: title,
             author: author,
+            authorId: authorId,
             published: published,
             duration: duration,
-            quality: thumbnails[0].quality,
-            url: thumbnails[0].url,
-            width: thumbnails[0].width,
-            height: thumbnails[0].height,
-            viewCountText: viewCountText
+            viewCountText: viewCountText,
+            thumbnailQuality: thumbnails[0].quality,
+            thumbnailUrl: thumbnails[0].url,
+            thumbnailWidth: thumbnails[0].width,
+            thumbnailHeight: thumbnails[0].height
         )
         context.insert(savedVideo)
     }
