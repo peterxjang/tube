@@ -87,21 +87,20 @@ final class OpenVideoPlayerAction {
             throw VideoPlaybackError.missingUrl
         }
 
-        #if !os(macOS)
         var metadata: [AVMetadataItem] = []
         let titleMetadata = AVMutableMetadataItem()
         titleMetadata.identifier = .commonIdentifierTitle
         titleMetadata.value = video.title as any NSCopying & NSObjectProtocol
+        titleMetadata.extendedLanguageTag = "und"
         metadata.append(titleMetadata)
 
         let subtitleMetadata = AVMutableMetadataItem()
         subtitleMetadata.identifier = .iTunesMetadataTrackSubTitle
         subtitleMetadata.value = video.author as any NSCopying & NSObjectProtocol
+        subtitleMetadata.extendedLanguageTag = "und"
         metadata.append(subtitleMetadata)
 
         item.externalMetadata = metadata
-        #endif
-
         return item
     }
 
