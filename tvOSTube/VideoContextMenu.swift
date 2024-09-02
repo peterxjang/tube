@@ -14,6 +14,7 @@ struct VideoContextMenu: View {
     var viewCountText: String
     @Environment(\.modelContext) private var context
     @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         NavigationLink(destination: ChannelView(model: ChannelViewModel(channelId: authorId))) {
@@ -34,11 +35,26 @@ struct VideoContextMenu: View {
                 Label("Add to Watch Later", systemImage: "plus.circle")
             }
         }
+
+        let isInHistory = historyVideos.contains(where: { $0.id == id })
+        if isInHistory {
+            Button {
+                removeFromHistory()
+            } label: {
+                Label("Remove from history", systemImage: "minus.circle")
+            }
+        }
     }
 
     private func removeFromWatchLater() {
         if let index = savedVideos.firstIndex(where: { $0.id == id }) {
             context.delete(savedVideos[index])
+        }
+    }
+
+    private func removeFromHistory() {
+        if let index = historyVideos.firstIndex(where: { $0.id == id }) {
+            context.delete(historyVideos[index])
         }
     }
 
