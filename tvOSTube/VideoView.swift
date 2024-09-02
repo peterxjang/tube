@@ -31,15 +31,19 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         videoView.player?.play()
         videoView.allowsPictureInPicturePlayback = false
         videoView.player?.rate = 1.0
-        let forwardImage = UIImage(systemName: "forward")
-        let forwardFillImage = UIImage(systemName: "forward.fill")
-        let rateAction = UIAction(title: "Playback speed", image: forwardImage) { action in
+        let defaultSpeedImage = UIImage(systemName: "forward.circle")
+        let fasterSpeedImage = UIImage(systemName: "forward.circle.fill")
+        let fastestSpeedImage = UIImage(systemName: "forward.fill")
+        let rateAction = UIAction(title: "Playback speed", image: defaultSpeedImage) { action in
             if player.rate == 1.0 {
                 player.rate = 1.5
-                action.image = forwardFillImage
+                action.image = fasterSpeedImage
+            } else if player.rate == 1.5 {
+                player.rate = 2.0
+                action.image = fastestSpeedImage
             } else {
                 player.rate = 1.0
-                action.image = forwardImage
+                action.image = defaultSpeedImage
             }
         }
         videoView.transportBarCustomMenuItems = [rateAction]
