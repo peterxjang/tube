@@ -10,10 +10,10 @@ struct SavedVideosView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 if savedVideos.isEmpty {
-                    Text("No videos saved to Watch Later.")
-                        .foregroundStyle(.secondary)
-                        .font(.headline)
-                        .padding()
+                    MessageBlock(
+                        title: "No videos saved to Watch Later.",
+                        message: "Long press a video to add to Watch Later."
+                    ).padding(.horizontal)
                 } else {
                     Text("Watch Later")
                         .font(.largeTitle)
@@ -36,6 +36,7 @@ struct SavedVideosView: View {
                 }
             }
             .navigationTitle("Watch Later")
+            .padding(50)
         }
     }
 }
