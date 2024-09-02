@@ -16,7 +16,7 @@ final class OpenVideoPlayerAction {
     var isPlayerOpen: Bool = false
     var isLoading: Bool = false
     private var player: AVPlayer? = nil
-    private var currentVideo: Video? = nil
+    var currentVideo: Video? = nil
     private var statusObserver: AnyCancellable?
 
     var currentPlayer: AVPlayer? {
@@ -57,6 +57,7 @@ final class OpenVideoPlayerAction {
                 case .readyToPlay:
                     self?.player?.play()
                     self?.isLoading = false // Hide the loading screen
+                    self?.currentVideo = video
                 case .failed:
                     // Handle error
                     self?.isLoading = false // Hide the loading screen

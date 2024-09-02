@@ -2,15 +2,21 @@ import AVKit
 import InvidiousKit
 import Observation
 import SwiftUI
+import SwiftData
 
 struct VideoView: View {
     @Environment(OpenVideoPlayerAction.self) private var playerState
+    @Environment(\.modelContext) private var context
+    @Query var savedVideos: [SavedVideo]
 
     var body: some View {
         if let player = playerState.currentPlayer {
             VideoPlayerView(player: player)
                 .ignoresSafeArea()
                 .onDisappear {
+                    if let video = playerState.currentVideo {
+                        saveVideoToHistory(video: video)
+                    }
                     playerState.close()
                 }
         } else {
@@ -18,6 +24,38 @@ struct VideoView: View {
                 .ignoresSafeArea()
         }
     }
+
+    private func saveVideoToHistory(video: Video) {
+        let historyVideos = savedVideos.filter { $0.videoType == "history" }
+        let isVideoInHistory = historyVideos.first(where: { $0.id == video.videoId }) != nil
+        if !isVideoInHistory {
+            if historyVideos.count >= 10 {
+                if let oldestVideo = historyVideos.first {
+                    context.delete(oldestVideo)
+                }
+            }
+            let savedVideo = SavedVideo(
+                id: video.videoId,
+                videoType: "history",
+                title: video.title,
+                author: video.author,
+                published: video.published,
+                duration: Int(video.lengthSeconds),
+                quality: video.videoThumbnails.first?.quality ?? "",
+                url: video.videoThumbnails.first?.url ?? "N/A",
+                width: video.videoThumbnails.first?.width ?? 0,
+                height: video.videoThumbnails.first?.height ?? 0,
+                viewCountText: String(video.viewCount)
+            )
+            context.insert(savedVideo)
+            do {
+                try context.save()
+            } catch {
+                print("Failed to save video to history: \(error)")
+            }
+        }
+    }
+
 }
 
 struct VideoPlayerView: UIViewControllerRepresentable {

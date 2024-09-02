@@ -7,32 +7,73 @@ struct SavedVideosView: View {
     @Query private var savedVideos: [SavedVideo]
 
     var body: some View {
+        let bookmarkedVideos = savedVideos.filter { video in
+            return video.videoType == "bookmark"
+        }.reversed()
+        let recommendedVideos = savedVideos.filter { video in
+            return video.videoType == "recommendation"
+        }.reversed()
+        let historyVideos = savedVideos.filter { video in
+            return video.videoType == "history"
+        }.reversed()
+
         ScrollView {
             VStack(alignment: .leading) {
-                if savedVideos.isEmpty {
-                    MessageBlock(
-                        title: "No videos saved to Watch Later.",
-                        message: "Long press a video to add to Watch Later."
-                    ).padding(.horizontal)
-                } else {
-                    Text("Watch Later")
-                        .font(.largeTitle)
-                    ScrollView(.horizontal) {
-                        LazyHGrid(rows: [.init(.flexible(minimum: 600))], alignment: .top, spacing: 70.0) {
-                            ForEach(savedVideos.reversed()) { video in
-                                VideoCard(
-                                    id: video.id,
-                                    title: video.title,
-                                    duration: video.duration,
-                                    published: video.published,
-                                    thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
-                                    author: video.author,
-                                    authorId: "UNAVAILABLE",
-                                    viewCountText: video.viewCountText
-                                )
-                            }
-                        }.padding(20)
-                    }
+                Text("Watch Later")
+                    .font(.largeTitle)
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
+                        ForEach(bookmarkedVideos) { video in
+                            VideoCard(
+                                id: video.id,
+                                title: video.title,
+                                duration: video.duration,
+                                published: video.published,
+                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
+                                author: video.author,
+                                authorId: "UNAVAILABLE",
+                                viewCountText: video.viewCountText
+                            )
+                        }
+                    }.padding(20)
+                }
+
+                Text("Recommended")
+                    .font(.largeTitle)
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
+                        ForEach(recommendedVideos) { video in
+                            VideoCard(
+                                id: video.id,
+                                title: video.title,
+                                duration: video.duration,
+                                published: video.published,
+                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
+                                author: video.author,
+                                authorId: "UNAVAILABLE",
+                                viewCountText: video.viewCountText
+                            )
+                        }
+                    }.padding(20)
+                }
+
+                Text("Recent History")
+                    .font(.largeTitle)
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
+                        ForEach(historyVideos) { video in
+                            VideoCard(
+                                id: video.id,
+                                title: video.title,
+                                duration: video.duration,
+                                published: video.published,
+                                thumbnails: [ThumbnailObject(quality: video.quality, url: video.url, width: video.width, height: video.height)],
+                                author: video.author,
+                                authorId: "UNAVAILABLE",
+                                viewCountText: video.viewCountText
+                            )
+                        }
+                    }.padding(20)
                 }
             }
             .navigationTitle("Watch Later")

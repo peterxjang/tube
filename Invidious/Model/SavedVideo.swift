@@ -4,6 +4,7 @@ import SwiftData
 @Model
 class SavedVideo {
     @Attribute(.unique) var id: String
+    var videoType: String
     var title: String
     var author: String
     var published: Int64
@@ -15,8 +16,9 @@ class SavedVideo {
     var viewCountText: String
     var addedDate: Date
 
-    init(id: String, title: String, author: String, published: Int64, duration: Int, quality: String,url: String,width: Int,height: Int, viewCountText: String, addedDate: Date = Date()) {
+    init(id: String, videoType: String, title: String, author: String, published: Int64, duration: Int, quality: String,url: String,width: Int,height: Int, viewCountText: String, addedDate: Date = Date()) {
         self.id = id
+        self.videoType = videoType
         self.title = title
         self.author = author
         self.published = published

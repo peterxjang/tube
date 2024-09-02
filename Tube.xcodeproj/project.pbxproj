@@ -397,6 +397,7 @@
 				ACB32E7F2C2068A600C540BB /* SearchView.swift */,
 				ACB32E812C20715200C540BB /* SearchResultsView.swift */,
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
+				AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */,
 				ACD1C1A82C7566DB00DD0F57 /* HorizontalSwiperVideoCard.swift */,
 				ACB32E972C2265F300C540BB /* VideoView.swift */,
 				ACB32E852C20B14300C540BB /* ChannelCard.swift */,
@@ -406,7 +407,6 @@
 				ACF7FD982C1CB26400C9EDB9 /* tvOSTubeTests */,
 				ACF7FDA22C1CB26400C9EDB9 /* tvOSTubeUITests */,
 				ACF7FD8E2C1CB26400C9EDB9 /* Preview Content */,
-				AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */,
 			);
 			path = tvOSTube;
 			sourceTree = "<group>";
