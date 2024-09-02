@@ -24,7 +24,7 @@ struct TubeApp: App {
                                 playerState.isPlayerOpen = false
                                 playerState.isLoading = false
                             } content: {
-                                VideoView(model: VideoViewModel())
+                                VideoView()
                                     .background(.windowBackground)
                             }
                     }
