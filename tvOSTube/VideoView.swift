@@ -29,9 +29,12 @@ struct VideoView: View {
         let historyVideos = savedVideos.filter { $0.videoType == "history" }
         let isVideoInHistory = historyVideos.first(where: { $0.id == video.videoId }) != nil
         if !isVideoInHistory {
-            if historyVideos.count >= 10 {
-                if let oldestVideo = historyVideos.first {
-                    context.delete(oldestVideo)
+            let maxHistorySize = 10
+            let numRemove = historyVideos.count - maxHistorySize + 1
+            if numRemove > 0 {
+                let videosToRemove = historyVideos.prefix(numRemove)
+                for video in videosToRemove {
+                    context.delete(video)
                 }
             }
             let savedVideo = SavedVideo(
