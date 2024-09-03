@@ -8,6 +8,7 @@ struct VideoView: View {
     @Environment(OpenVideoPlayerAction.self) private var playerState
     @Environment(\.modelContext) private var context
     @Query var historyVideos: [HistoryVideo]
+    @Query var recommendedVideos: [RecommendedVideo]
 
     var body: some View {
         if let player = playerState.currentPlayer {
@@ -16,6 +17,7 @@ struct VideoView: View {
                 .onDisappear {
                     if let video = playerState.currentVideo {
                         saveVideoToHistory(video: video)
+                        saveRecommendedVideos(video: video)
                     }
                     playerState.close()
                 }
@@ -55,6 +57,41 @@ struct VideoView: View {
                 try context.save()
             } catch {
                 print("Failed to save video to history: \(error)")
+            }
+        }
+    }
+
+    private func saveRecommendedVideos(video: Video) {
+        for recommendedVideo in video.recommendedVideos.prefix(3) {
+            if recommendedVideos.first(where: { $0.id == recommendedVideo.videoId }) == nil {
+                let item = RecommendedVideo(
+                    id: recommendedVideo.videoId,
+                    title: recommendedVideo.title,
+                    author: recommendedVideo.author,
+                    authorId: recommendedVideo.authorId,
+                    lengthSeconds: Int(recommendedVideo.lengthSeconds),
+                    viewCount: Int(recommendedVideo.viewCount),
+                    viewCountText: recommendedVideo.viewCountText,
+                    thumbnailQuality: recommendedVideo.videoThumbnails.first?.quality ?? "",
+                    thumbnailUrl: recommendedVideo.videoThumbnails.first?.url ?? "N/A",
+                    thumbnailWidth: recommendedVideo.videoThumbnails.first?.width ?? 0,
+                    thumbnailHeight: recommendedVideo.videoThumbnails.first?.height ?? 0
+                )
+                context.insert(item)
+                do {
+                    try context.save()
+                } catch {
+                    print("Failed to save video to history: \(error)")
+                }
+            }
+        }
+
+        let maxSize = 100
+        let numRemove = recommendedVideos.count - maxSize
+        if numRemove > 0 {
+            let videosToRemove = recommendedVideos.prefix(numRemove)
+            for video in videosToRemove {
+                context.delete(video)
             }
         }
     }

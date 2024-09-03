@@ -10,6 +10,7 @@ public struct Video: Decodable {
 
     public var keywords: [String]
     public var viewCount: Int64
+    public var viewCountText: String?
     public var likeCount: Int32
     public var dislikeCount: Int32
 
@@ -79,7 +80,9 @@ public struct Video: Decodable {
         public var title: String
         public var videoThumbnails: [ThumbnailObject]
         public var author: String
+        public var authorId: String
         public var lengthSeconds: Int32
+        public var viewCount: Int
         public var viewCountText: String
     }
 
@@ -91,6 +94,7 @@ public struct Video: Decodable {
         published: Int64,
         keywords: [String],
         viewCount: Int64,
+        viewCountText: String,
         likeCount: Int32,
         dislikeCount: Int32,
         paid: Bool,
@@ -124,6 +128,7 @@ public struct Video: Decodable {
         self.published = published
         self.keywords = keywords
         self.viewCount = viewCount
+        self.viewCountText = viewCountText
         self.likeCount = likeCount
         self.dislikeCount = dislikeCount
         self.paid = paid
