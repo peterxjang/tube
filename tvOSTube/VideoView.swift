@@ -99,6 +99,7 @@ struct VideoView: View {
 
 struct VideoPlayerView: UIViewControllerRepresentable {
     var player: AVPlayer
+    @Environment(OpenVideoPlayerAction.self) private var playerState
 
     typealias NSViewControllerType = AVPlayerViewController
 
@@ -130,16 +131,29 @@ struct VideoPlayerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, player: player)
+        Coordinator(self, player: player, playerState: playerState)
     }
 
     class Coordinator: NSObject {
         var parent: VideoPlayerView
         var player: AVPlayer
+        var playerState: OpenVideoPlayerAction
 
-        init(_ parent: VideoPlayerView, player: AVPlayer) {
+        init(_ parent: VideoPlayerView, player: AVPlayer, playerState: OpenVideoPlayerAction) {
             self.parent = parent
             self.player = player
+            self.playerState = playerState
+            super.init()
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerDidFinishPlaying),
+                name: .AVPlayerItemDidPlayToEndTime,
+                object: self.player.currentItem
+            )
+        }
+
+        @objc func playerDidFinishPlaying() {
+            playerState.close()
         }
     }
 }
