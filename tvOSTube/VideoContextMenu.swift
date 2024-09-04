@@ -6,12 +6,12 @@ struct VideoContextMenu: View {
     var id: String
     var title: String
     var duration: Int
-    var publishedText: String
+    var publishedText: String?
     var published: Int64
     var thumbnails: [ThumbnailObject]
     var author: String
     var authorId: String
-    var viewCountText: String
+    var viewCountText: String?
     @Environment(\.modelContext) private var context
     @Query var savedVideos: [SavedVideo]
     @Query var historyVideos: [HistoryVideo]
@@ -66,7 +66,7 @@ struct VideoContextMenu: View {
             authorId: authorId,
             published: published,
             duration: duration,
-            viewCountText: viewCountText,
+            viewCountText: viewCountText ?? "",
             thumbnailQuality: thumbnails[0].quality,
             thumbnailUrl: thumbnails[0].url,
             thumbnailWidth: thumbnails[0].width,

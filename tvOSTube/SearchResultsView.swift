@@ -55,7 +55,17 @@ struct SearchResultsView: View {
                         ForEach(model.results) { result in
                             switch result {
                             case .video(let video):
-                                VideoCard(videoObject: video)
+                                VideoCard(
+                                    id: video.videoId,
+                                    title: video.title,
+                                    duration: video.lengthSeconds,
+                                    publishedText: video.publishedText,
+                                    published: video.published,
+                                    thumbnails: video.videoThumbnails,
+                                    author: video.author,
+                                    authorId: video.authorId,
+                                    viewCountText: video.viewCountText
+                                )
                             case .channel(let channel):
                                 ChannelCard(channel: channel)
                             case .playlist(let playlist):

@@ -5,41 +5,17 @@ struct VideoCard: View {
     var id: String
     var title: String
     var duration: Int
-    var publishedText: String
+    var publishedText: String?
     var published: Int64
     var thumbnails: [ThumbnailObject]
     var author: String
     var authorId: String
-    var viewCountText: String
+    var viewCountText: String?
     @Environment(OpenVideoPlayerAction.self) var openPlayer
 
     private var formattedDuration: String {
         let result = (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
         return result == "0" ? "" : result
-    }
-
-    init(videoObject: VideoObject) {
-        id = videoObject.videoId
-        title = videoObject.title
-        duration = videoObject.lengthSeconds
-        published = videoObject.published
-        publishedText = videoObject.publishedText
-        thumbnails = videoObject.videoThumbnails
-        author = videoObject.author
-        authorId = videoObject.authorId
-        viewCountText = videoObject.viewCountText
-    }
-
-    init(id: String, title: String, duration: Int, publishedText: String = "", published: Int64 = 0, thumbnails: [ThumbnailObject], author: String, authorId: String, viewCountText: String = "") {
-        self.id = id
-        self.title = title
-        self.duration = duration
-        self.publishedText = publishedText
-        self.published = published
-        self.thumbnails = thumbnails
-        self.author = author
-        self.viewCountText = viewCountText
-        self.authorId = authorId
     }
 
     var body: some View {
@@ -72,8 +48,8 @@ struct VideoCard: View {
 
             Text(title).lineLimit(2, reservesSpace: true).font(.headline)
             Text(author).lineLimit(1).foregroundStyle(.secondary).font(.caption)
-            if !publishedText.isEmpty && !viewCountText.isEmpty {
-                Text("\(publishedText)  |  \(viewCountText)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
+            if let publishedTextValue = publishedText, let viewCountTextValue = viewCountText {
+                Text("\(publishedTextValue)  |  \(viewCountTextValue)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
         }.frame(width: width)
     }

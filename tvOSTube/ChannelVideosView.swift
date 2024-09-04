@@ -66,7 +66,17 @@ struct ChannelVideosView: View {
             } else {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 50) {
                     ForEach(videos, id: \.videoId) { video in
-                        VideoCard(videoObject: video)
+                        VideoCard(
+                            id: video.videoId,
+                            title: video.title,
+                            duration: video.lengthSeconds,
+                            publishedText: video.publishedText,
+                            published: video.published,
+                            thumbnails: video.videoThumbnails,
+                            author: video.author,
+                            authorId: video.authorId,
+                            viewCountText: video.viewCountText
+                        )
                     }
                 }
             }
