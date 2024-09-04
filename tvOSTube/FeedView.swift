@@ -6,6 +6,8 @@ import SwiftUI
 struct FeedView: View {
     @State var search: String = ""
     @Query(sort: \FollowedChannel.name) var channels: [FollowedChannel]
+    @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
     @State private var combinedVideos: [VideoObject] = []
     @State private var isLoading: Bool = true
     @State private var loadedChannelsCount: Int = 0
@@ -41,7 +43,9 @@ struct FeedView: View {
                                         thumbnails: video.videoThumbnails,
                                         author: video.author,
                                         authorId: video.authorId,
-                                        viewCountText: video.viewCountText
+                                        viewCountText: video.viewCountText,
+                                        savedVideos: savedVideos,
+                                        historyVideos: historyVideos
                                     )
                                 }
                                 Button {

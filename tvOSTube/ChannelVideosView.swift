@@ -1,6 +1,7 @@
 import InvidiousKit
 import Observation
 import SwiftUI
+import SwiftData
 
 @Observable
 class ChannelVideosViewModel {
@@ -58,6 +59,8 @@ class ChannelVideosViewModel {
 
 struct ChannelVideosView: View {
     var model: ChannelVideosViewModel
+    @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         if let videos = model.videos {
@@ -75,7 +78,9 @@ struct ChannelVideosView: View {
                             thumbnails: video.videoThumbnails,
                             author: video.author,
                             authorId: video.authorId,
-                            viewCountText: video.viewCountText
+                            viewCountText: video.viewCountText,
+                            savedVideos: savedVideos,
+                            historyVideos: historyVideos
                         )
                     }
                 }

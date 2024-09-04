@@ -11,6 +11,8 @@ struct VideoCard: View {
     var author: String
     var authorId: String
     var viewCountText: String?
+    var savedVideos: [SavedVideo]
+    var historyVideos: [HistoryVideo]
     @Environment(OpenVideoPlayerAction.self) var openPlayer
 
     private var formattedDuration: String {
@@ -42,7 +44,9 @@ struct VideoCard: View {
                     thumbnails: thumbnails,
                     author: author,
                     authorId: authorId,
-                    viewCountText: viewCountText
+                    viewCountText: viewCountText,
+                    savedVideos: savedVideos,
+                    historyVideos: historyVideos
                 )
             }
 

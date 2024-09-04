@@ -1,5 +1,6 @@
 import InvidiousKit
 import SwiftUI
+import SwiftData
 
 @Observable
 class SearchResultsViewModel {
@@ -41,6 +42,8 @@ class SearchResultsViewModel {
 struct SearchResultsView: View {
     @Binding var query: String
     var model = SearchResultsViewModel()
+    @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         VStack {
@@ -64,7 +67,9 @@ struct SearchResultsView: View {
                                     thumbnails: video.videoThumbnails,
                                     author: video.author,
                                     authorId: video.authorId,
-                                    viewCountText: video.viewCountText
+                                    viewCountText: video.viewCountText,
+                                    savedVideos: savedVideos,
+                                    historyVideos: historyVideos
                                 )
                             case .channel(let channel):
                                 ChannelCard(channel: channel)

@@ -12,9 +12,9 @@ struct VideoContextMenu: View {
     var author: String
     var authorId: String
     var viewCountText: String?
+    var savedVideos: [SavedVideo]
+    var historyVideos: [HistoryVideo]
     @Environment(\.modelContext) private var context
-    @Query var savedVideos: [SavedVideo]
-    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         NavigationLink(destination: ChannelView(model: ChannelViewModel(channelId: authorId))) {

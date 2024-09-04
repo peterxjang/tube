@@ -1,6 +1,7 @@
 import InvidiousKit
 import Observation
 import SwiftUI
+import SwiftData
 
 @Observable
 class PlaylistViewModel {
@@ -30,6 +31,8 @@ class PlaylistViewModel {
 
 struct PlaylistView: View {
     var model: PlaylistViewModel
+    @Query var savedVideos: [SavedVideo]
+    @Query var historyVideos: [HistoryVideo]
 
     var body: some View {
         ScrollView {
@@ -42,7 +45,9 @@ struct PlaylistView: View {
                         published: 0,
                         thumbnails: video.videoThumbnails,
                         author: video.author ?? "Unknown Channel",
-                        authorId: "UNAVAILABLE"
+                        authorId: "UNAVAILABLE",
+                        savedVideos: savedVideos,
+                        historyVideos: historyVideos
                     )
                     .padding(30)
                 }
