@@ -1,7 +1,7 @@
 import SwiftUI
 import InvidiousKit
 
-struct HorizontalSwiperVideoCard: View {
+struct HorizontalSwiperVideoCardddd: View {
     var id: String
     var title: String
     var duration: Int

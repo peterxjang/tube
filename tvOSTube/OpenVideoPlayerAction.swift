@@ -26,14 +26,14 @@ final class OpenVideoPlayerAction {
     }
 
     @MainActor
-    public func callAsFunction(id: String?) async {
+    public func callAsFunction(id: String?, startTime: Int? = nil) async {
         guard let id else { return }
         
         await MainActor.run {
             isLoading = true
         }
 
-        try? await playVideo(withId: id)
+        try? await playVideo(withId: id, startTime: startTime)
     }
 
     public func close() {
@@ -49,7 +49,7 @@ final class OpenVideoPlayerAction {
     }
 
     @MainActor
-    private func playVideo(withId id: String) async throws {
+    private func playVideo(withId id: String, startTime: Int? = nil) async throws {
         let video = try await TubeApp.client.video(for: id)
         let playerItem = try createPlayerItem(for: video)
         player = AVPlayer(playerItem: playerItem)
@@ -58,6 +58,9 @@ final class OpenVideoPlayerAction {
             .sink { [weak self] status in
                 switch status {
                 case .readyToPlay:
+                    if let startTime = startTime {
+                        self?.player?.seek(to: CMTime(seconds: Double(startTime), preferredTimescale: 1))
+                    }
                     self?.player?.play()
                     self?.isLoading = false
                     self?.currentVideo = video

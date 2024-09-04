@@ -67,7 +67,8 @@ struct VideoCard: View {
     @MainActor
     func action() {
         Task {
-            await openPlayer(id: id)
+            let startTime = historyVideos.first(where: { $0.id == id })?.watchedSeconds
+            await openPlayer(id: id, startTime: startTime)
         }
     }
 }
