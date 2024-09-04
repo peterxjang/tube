@@ -7,6 +7,7 @@ struct SavedVideosView: View {
     @Query private var savedVideos: [SavedVideo]
     @Query private var historyVideos: [HistoryVideo]
     @Query var recommendedVideos: [RecommendedVideo]
+    var settings = Settings()
 
     var body: some View {
         ScrollView {
@@ -24,7 +25,7 @@ struct SavedVideosView: View {
                                 thumbnails: [
                                     ThumbnailObject(
                                         quality: video.thumbnailQuality,
-                                        url: video.thumbnailUrl,
+                                        url: "\(settings.invidiousInstance ?? "")/vi/\(video.id)/sddefault.jpg",
                                         width: video.thumbnailWidth,
                                         height: video.thumbnailHeight
                                     )
@@ -52,7 +53,7 @@ struct SavedVideosView: View {
                                 thumbnails: [
                                     ThumbnailObject(
                                         quality: video.thumbnailQuality,
-                                        url: video.thumbnailUrl,
+                                        url: "\(settings.invidiousInstance ?? "")/vi/\(video.id)/sddefault.jpg",
                                         width: video.thumbnailWidth,
                                         height: video.thumbnailHeight
                                     )
@@ -80,7 +81,7 @@ struct SavedVideosView: View {
                                 thumbnails: [
                                     ThumbnailObject(
                                         quality: video.thumbnailQuality,
-                                        url: video.thumbnailUrl,
+                                        url: "\(settings.invidiousInstance ?? "")/vi/\(video.id)/sddefault.jpg",
                                         width: video.thumbnailWidth,
                                         height: video.thumbnailHeight
                                     )
