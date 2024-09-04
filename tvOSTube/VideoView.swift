@@ -28,36 +28,36 @@ struct VideoView: View {
     }
 
     private func saveVideoToHistory(video: Video) {
-        let isVideoInHistory = historyVideos.first(where: { $0.id == video.videoId }) != nil
-        if !isVideoInHistory {
-            let maxHistorySize = 10
-            let numRemove = historyVideos.count - maxHistorySize + 1
-            if numRemove > 0 {
-                let videosToRemove = historyVideos.prefix(numRemove)
-                for video in videosToRemove {
-                    context.delete(video)
-                }
+        if let foundVideo = historyVideos.first(where: { $0.id == video.videoId }) {
+            context.delete(foundVideo)
+        }
+        let historyVideo = HistoryVideo(
+            id: video.videoId,
+            title: video.title,
+            author: video.author,
+            authorId: video.authorId,
+            published: video.published,
+            lengthSeconds: Int(video.lengthSeconds),
+            watchedSeconds: Int(playerState.watchedSeconds),
+            viewCount: Int(video.viewCount),
+            thumbnailQuality: video.videoThumbnails.first?.quality ?? "",
+            thumbnailUrl: video.videoThumbnails.first?.url ?? "N/A",
+            thumbnailWidth: video.videoThumbnails.first?.width ?? 0,
+            thumbnailHeight: video.videoThumbnails.first?.height ?? 0
+        )
+        context.insert(historyVideo)
+        let maxHistorySize = 100
+        let numRemove = historyVideos.count - maxHistorySize
+        if numRemove > 0 {
+            let videosToRemove = historyVideos.prefix(numRemove)
+            for video in videosToRemove {
+                context.delete(video)
             }
-            let historyVideo = HistoryVideo(
-                id: video.videoId,
-                title: video.title,
-                author: video.author,
-                authorId: video.authorId,
-                published: video.published,
-                lengthSeconds: Int(video.lengthSeconds),
-                watchedSeconds: 0,
-                viewCount: Int(video.viewCount),
-                thumbnailQuality: video.videoThumbnails.first?.quality ?? "",
-                thumbnailUrl: video.videoThumbnails.first?.url ?? "N/A",
-                thumbnailWidth: video.videoThumbnails.first?.width ?? 0,
-                thumbnailHeight: video.videoThumbnails.first?.height ?? 0
-            )
-            context.insert(historyVideo)
-            do {
-                try context.save()
-            } catch {
-                print("Failed to save video to history: \(error)")
-            }
+        }
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save video to history: \(error)")
         }
     }
 

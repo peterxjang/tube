@@ -18,6 +18,8 @@ final class OpenVideoPlayerAction {
     private var player: AVPlayer? = nil
     var currentVideo: Video? = nil
     private var statusObserver: AnyCancellable?
+    private var timeObserverToken: Any? = nil
+    var watchedSeconds: Double = 0.0
 
     var currentPlayer: AVPlayer? {
         return player
@@ -40,34 +42,33 @@ final class OpenVideoPlayerAction {
         player = nil
         statusObserver?.cancel()
         statusObserver = nil
+        if let timeObserverToken {
+            player?.removeTimeObserver(timeObserverToken)
+        }
+        timeObserverToken = nil
     }
 
     @MainActor
     private func playVideo(withId id: String) async throws {
         let video = try await TubeApp.client.video(for: id)
         let playerItem = try createPlayerItem(for: video)
-
         player = AVPlayer(playerItem: playerItem)
         player?.allowsExternalPlayback = true
-
-        // Use Combine to observe the status of the AVPlayerItem
         statusObserver = playerItem.publisher(for: \.status)
             .sink { [weak self] status in
                 switch status {
                 case .readyToPlay:
                     self?.player?.play()
-                    self?.isLoading = false // Hide the loading screen
+                    self?.isLoading = false
                     self?.currentVideo = video
+                    self?.startTrackingTime()
                 case .failed:
-                    // Handle error
-                    self?.isLoading = false // Hide the loading screen
+                    self?.isLoading = false
                 default:
                     break
                 }
             }
-
         updateNowPlayingInfo(with: video)
-
         await MainActor.run {
             isPlayerOpen = true
         }
@@ -111,5 +112,16 @@ final class OpenVideoPlayerAction {
             MPMediaItemPropertyTitle: video.title,
             MPMediaItemPropertyArtist: video.author,
         ]
+    }
+
+    private func startTrackingTime() {
+        guard let player = player else { return }
+        if let timeObserverToken {
+            player.removeTimeObserver(timeObserverToken)
+        }
+        let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            self?.watchedSeconds = CMTimeGetSeconds(time)
+        }
     }
 }

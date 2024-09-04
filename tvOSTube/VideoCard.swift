@@ -26,9 +26,15 @@ struct VideoCard: View {
 
         VStack(alignment: .leading) {
             Button(action: action) {
-                ZStack {
+                ZStack(alignment: .bottomLeading) {
                     ThumbnailView(width: width, height: height, radius: 8.0, thumbnails: thumbnails)
                     VideoThumbnailTag(self.formattedDuration)
+                    if let historyVideo = historyVideos.first(where: { $0.id == id }) {
+                        let progress = CGFloat(historyVideo.watchedSeconds) / CGFloat(duration)
+                        Rectangle()
+                            .fill(Color.red)
+                            .frame(width: width * progress, height: 5)
+                    }
                 }
                 .frame(width: width, height: height)
             }
