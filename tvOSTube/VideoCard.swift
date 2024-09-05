@@ -32,6 +32,9 @@ struct VideoCard: View {
                     if let historyVideo = historyVideos.first(where: { $0.id == id }) {
                         let progress = CGFloat(historyVideo.watchedSeconds) / CGFloat(duration)
                         Rectangle()
+                            .fill(Color(UIColor.lightGray))
+                            .frame(width: width, height: 5)
+                        Rectangle()
                             .fill(Color.red)
                             .frame(width: width * progress, height: 5)
                     }
