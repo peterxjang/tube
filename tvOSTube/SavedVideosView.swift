@@ -13,7 +13,7 @@ struct SavedVideosView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Watch Later")
-                    .font(.largeTitle)
+                    .font(.subheadline)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
                         ForEach(savedVideos.reversed()) { video in
@@ -41,7 +41,8 @@ struct SavedVideosView: View {
                 }
 
                 Text("Recommended")
-                    .font(.largeTitle)
+                    .font(.subheadline)
+                    .padding(.top, 50)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
                         ForEach(recommendedVideos.shuffled()) { video in
@@ -69,7 +70,8 @@ struct SavedVideosView: View {
                 }
 
                 Text("Recent History")
-                    .font(.largeTitle)
+                    .font(.subheadline)
+                    .padding(.top, 50)
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [.init(.flexible())], alignment: .top, spacing: 70.0) {
                         ForEach(historyVideos.reversed()) { video in
