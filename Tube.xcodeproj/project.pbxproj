@@ -63,6 +63,7 @@
 		AC1FE1F02C1F28650084AB66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9259D0F82ACF156800709DBB /* SettingsView.swift */; };
 		AC287BFE2C867B5C00D3DE11 /* HistoryVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC287BFC2C8677EC00D3DE11 /* HistoryVideo.swift */; };
 		AC287C012C869B9600D3DE11 /* RecommendedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC287BFF2C869B7E00D3DE11 /* RecommendedVideo.swift */; };
+		AC42915A2C8A9FE500EC356C /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4291592C8A9FE500EC356C /* VideoPlayerView.swift */; };
 		AC4C01D72C652BDB00513555 /* ChannelPlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */; };
 		AC4C01D92C652C4500513555 /* PlaylistItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01D82C652C4500513555 /* PlaylistItemView.swift */; };
 		AC4C01DD2C6543EE00513555 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C01DC2C6543EE00513555 /* PlaylistView.swift */; };
@@ -159,6 +160,7 @@
 		AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoContextMenu.swift; sourceTree = "<group>"; };
 		AC287BFC2C8677EC00D3DE11 /* HistoryVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVideo.swift; sourceTree = "<group>"; };
 		AC287BFF2C869B7E00D3DE11 /* RecommendedVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedVideo.swift; sourceTree = "<group>"; };
+		AC4291592C8A9FE500EC356C /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		AC4C01D62C652BDB00513555 /* ChannelPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlaylistsView.swift; sourceTree = "<group>"; };
 		AC4C01D82C652C4500513555 /* PlaylistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemView.swift; sourceTree = "<group>"; };
 		AC4C01DC2C6543EE00513555 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				ACB32E832C20900000C540BB /* VideoCard.swift */,
 				AC13D75C2C82B04400EDA9A7 /* VideoContextMenu.swift */,
 				ACB32E972C2265F300C540BB /* VideoView.swift */,
+				AC4291592C8A9FE500EC356C /* VideoPlayerView.swift */,
 				ACB32E852C20B14300C540BB /* ChannelCard.swift */,
 				ACF7FD8A2C1CB26200C9EDB9 /* ContentView.swift */,
 				AC4C01E62C75349400513555 /* OpenVideoPlayerAction.swift */,
@@ -661,6 +664,7 @@
 				ACF7FDB42C1CB58300C9EDB9 /* Following.swift in Sources */,
 				ACD1C1A72C7560CC00DD0F57 /* TubeApp.swift in Sources */,
 				AC1FE1EB2C1F27C20084AB66 /* CommentsView.swift in Sources */,
+				AC42915A2C8A9FE500EC356C /* VideoPlayerView.swift in Sources */,
 				ACB32E8A2C2126A600C540BB /* SubscriptionsView.swift in Sources */,
 				ACB32E942C21CD0600C540BB /* ChannelVideosView.swift in Sources */,
 				AC1FE1DB2C1D19BD0084AB66 /* ImageView.swift in Sources */,
