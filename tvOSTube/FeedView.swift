@@ -23,7 +23,7 @@ struct FeedView: View {
                         message: "Search for channels you'd like to follow."
                     ).padding(.horizontal)
                 } else {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .trailing) {
                         if isLoading {
                             ProgressView(value: Double(loadedChannelsCount), total: Double(channels.count))
                                 .padding()
@@ -33,6 +33,16 @@ struct FeedView: View {
                             MessageBlock(title: "No Videos", message: "No videos available from followed channels.")
                                 .padding()
                         } else {
+                            Button {
+                                loadedChannelsCount = 0
+                                isLoading = true
+                                Task {
+                                    await fetchCombinedVideos()
+                                }
+                            } label: {
+                                Label("Refresh", systemImage: "arrow.clockwise")
+                            }
+                            .padding(.trailing, 20)
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 100) {
                                 ForEach(combinedVideos, id: \.videoId) { video in
                                     VideoCard(
@@ -50,16 +60,6 @@ struct FeedView: View {
                                         recommendedVideos: recommendedVideos
                                     )
                                 }
-                                Button {
-                                    loadedChannelsCount = 0
-                                    isLoading = true
-                                    Task {
-                                        await fetchCombinedVideos()
-                                    }
-                                } label: {
-                                    Label("Refresh", systemImage: "arrow.clockwise")
-                                }
-                                .buttonStyle(.plain)
                             }
                         }
                     }
