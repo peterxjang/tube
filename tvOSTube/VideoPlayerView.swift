@@ -65,7 +65,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
             item.externalMetadata = metadata
             getSponsorSegments(video: video, playerItem: item)
         }
-        self.startTrackingTime()
+        self.startTrackingTime(playerViewController: videoView)
         return videoView
     }
 
@@ -169,7 +169,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         return item.copy() as! AVMetadataItem
     }
 
-    private func startTrackingTime() {
+    private func startTrackingTime(playerViewController: AVPlayerViewController) {
         if let timeObserverToken {
             player.removeTimeObserver(timeObserverToken)
         }
@@ -180,10 +180,17 @@ struct VideoPlayerView: UIViewControllerRepresentable {
                 let startTime = segment[0]
                 let endTime = segment[1]
                 if currentTime >= Double(startTime) && currentTime < Double(endTime) {
-                    print("Current \(currentTime), Skipping segment: \(startTime) to \(endTime)")
-                    self.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 1), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
-                    break
+                    if playerViewController.contextualActions.isEmpty {
+                        let skipAction = UIAction(title: "Skip", image: UIImage(systemName: "forward.fill")) { _ in
+                            self.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 1), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
+                        }
+                        playerViewController.contextualActions = [skipAction]
+                    }
+                    return
                 }
+            }
+            if !playerViewController.contextualActions.isEmpty {
+                playerViewController.contextualActions = []
             }
             self.watchedSeconds = currentTime
         }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in VideoPlayerView.startTrackingTime(playerViewController:):VideoPlayerView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "playerViewController.contextualActions">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
