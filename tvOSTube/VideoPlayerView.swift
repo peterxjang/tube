@@ -4,17 +4,6 @@ import InvidiousKit
 import MediaPlayer
 import Combine
 
-public struct SponsorBlockObject: Decodable {
-    public var category: String
-    public var actionType: String
-    public var segment: [Float]
-    public var UUID: String
-    public var videoDuration: Float
-    public var locked: Int
-    public var votes: Int
-    public var description: String
-}
-
 struct Chapter {
     let title: String
     let imageName: String
@@ -22,16 +11,13 @@ struct Chapter {
     let endTime: TimeInterval
 }
 
-enum VideoPlaybackError: LocalizedError {
-    case missingUrl
-}
-
 struct VideoPlayerView: UIViewControllerRepresentable {
     var video: Video
     var player: AVPlayer
-    @State var skippableSegments: [[Float]] = []
-    @Binding var watchedSeconds: Double
-    @Binding var timeObserverToken: Any?
+    var skippableSegments: [[Float]]
+    var historyVideos: [HistoryVideo]
+    var recommendedVideos: [RecommendedVideo]
+    @Environment(\.modelContext) private var databaseContext
 
     typealias NSViewControllerType = AVPlayerViewController
 
@@ -63,25 +49,29 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         metadata.append(makeMetadataItem(.iTunesMetadataTrackSubTitle, value: video.author))
         if let item = videoView.player?.currentItem {
             item.externalMetadata = metadata
-            getSponsorSegments(video: video, playerItem: item)
+            item.navigationMarkerGroups = makeNavigationMarkerGroups(video: video)
         }
-        self.startTrackingTime(playerViewController: videoView)
+        context.coordinator.startTrackingTime(playerViewController: videoView, skippableSegments: skippableSegments)
         return videoView
     }
 
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, player: player)
+        Coordinator(self, player: player, video: video)
     }
 
     class Coordinator: NSObject {
         var parent: VideoPlayerView
         var player: AVPlayer
+        var video: Video
+        private var timeObserverToken: Any?
+        private var watchedSeconds: Double = 0.0
 
-        init(_ parent: VideoPlayerView, player: AVPlayer) {
+        init(_ parent: VideoPlayerView, player: AVPlayer, video: Video) {
             self.parent = parent
             self.player = player
+            self.video = video
             super.init()
             NotificationCenter.default.addObserver(
                 self,
@@ -91,9 +81,46 @@ struct VideoPlayerView: UIViewControllerRepresentable {
             )
         }
 
+        func startTrackingTime(playerViewController: AVPlayerViewController, skippableSegments: [[Float]]) {
+            if let timeObserverToken {
+                player.removeTimeObserver(timeObserverToken)
+            }
+            let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+            timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+                let currentTime = CMTimeGetSeconds(time)
+                for segment in skippableSegments {
+                    let startTime = segment[0]
+                    let endTime = segment[1]
+                    if currentTime >= Double(startTime) && currentTime < Double(endTime) {
+                        if playerViewController.contextualActions.isEmpty {
+                            let skipAction = UIAction(title: "Skip", image: UIImage(systemName: "forward.fill")) { _ in
+                                self?.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 1), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
+                            }
+                            playerViewController.contextualActions = [skipAction]
+                        }
+                        return
+                    }
+                }
+                if !playerViewController.contextualActions.isEmpty {
+                    playerViewController.contextualActions = []
+                }
+                self?.watchedSeconds = currentTime
+            }
+        }
+
         @objc func playerDidFinishPlaying() {
             print("playerDidFinishPlaying")
         }
+
+        deinit {
+            if let timeObserverToken {
+                player.removeTimeObserver(timeObserverToken)
+            }
+            timeObserverToken = nil
+            parent.saveVideoToHistory(video: video, watchedSeconds: Int(watchedSeconds))
+            parent.saveRecommendedVideos(video: video)
+        }
+        
     }
 
     private func updateNowPlayingInfo(with video: Video) {
@@ -102,25 +129,6 @@ struct VideoPlayerView: UIViewControllerRepresentable {
             MPMediaItemPropertyTitle: video.title,
             MPMediaItemPropertyArtist: video.author,
         ]
-    }
-
-    private func getSponsorSegments(video: Video, playerItem: AVPlayerItem) {
-        let url = URL(string: "https://sponsor.ajay.app/api/skipSegments?videoID=\(video.videoId)")!
-        let request = URLRequest(url: url)
-        Task {
-            do {
-                let (data, _) = try await URLSession.shared.data(for: request)
-                if let videoInfo = try? JSONDecoder().decode([SponsorBlockObject].self, from: data) {
-                    print(videoInfo)
-                    skippableSegments = videoInfo.map { $0.segment }
-                    playerItem.navigationMarkerGroups = makeNavigationMarkerGroups(video: video)
-                } else {
-                    print("SponsorBlock Invalid Response")
-                }
-            } catch {
-                print("Failed to Send POST Request \(error)")
-            }
-        }
     }
 
     private func makeNavigationMarkerGroups(video: Video) -> [AVNavigationMarkersGroup] {
@@ -169,30 +177,75 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         return item.copy() as! AVMetadataItem
     }
 
-    private func startTrackingTime(playerViewController: AVPlayerViewController) {
-        if let timeObserverToken {
-            player.removeTimeObserver(timeObserverToken)
+    private func saveVideoToHistory(video: Video, watchedSeconds: Int) {
+        let context = databaseContext
+        print("saveVideoToHistory")
+        if let foundVideo = historyVideos.first(where: { $0.id == video.videoId }) {
+            context.delete(foundVideo)
         }
-        let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [self] time in
-            let currentTime = CMTimeGetSeconds(time)
-            for segment in self.skippableSegments {
-                let startTime = segment[0]
-                let endTime = segment[1]
-                if currentTime >= Double(startTime) && currentTime < Double(endTime) {
-                    if playerViewController.contextualActions.isEmpty {
-                        let skipAction = UIAction(title: "Skip", image: UIImage(systemName: "forward.fill")) { _ in
-                            self.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 1), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
-                        }
-                        playerViewController.contextualActions = [skipAction]
-                    }
-                    return
+        let historyVideo = HistoryVideo(
+            id: video.videoId,
+            title: video.title,
+            author: video.author,
+            authorId: video.authorId,
+            published: video.published,
+            lengthSeconds: Int(video.lengthSeconds),
+            watchedSeconds: watchedSeconds,
+            viewCount: Int(video.viewCount),
+            thumbnailQuality: video.videoThumbnails.first?.quality ?? "",
+            thumbnailUrl: video.videoThumbnails.first?.url ?? "N/A",
+            thumbnailWidth: video.videoThumbnails.first?.width ?? 0,
+            thumbnailHeight: video.videoThumbnails.first?.height ?? 0
+        )
+        context.insert(historyVideo)
+        let maxHistorySize = 100
+        let numRemove = historyVideos.count - maxHistorySize
+        if numRemove > 0 {
+            let videosToRemove = historyVideos.prefix(numRemove)
+            for video in videosToRemove {
+                context.delete(video)
+            }
+        }
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save video to history: \(error)")
+        }
+    }
+
+    private func saveRecommendedVideos(video: Video) {
+        let context = databaseContext
+        for recommendedVideo in video.recommendedVideos.prefix(3) {
+            if recommendedVideos.first(where: { $0.id == recommendedVideo.videoId }) == nil {
+                let item = RecommendedVideo(
+                    id: recommendedVideo.videoId,
+                    title: recommendedVideo.title,
+                    author: recommendedVideo.author,
+                    authorId: recommendedVideo.authorId,
+                    lengthSeconds: Int(recommendedVideo.lengthSeconds),
+                    viewCount: Int(recommendedVideo.viewCount),
+                    viewCountText: recommendedVideo.viewCountText,
+                    thumbnailQuality: recommendedVideo.videoThumbnails.first?.quality ?? "",
+                    thumbnailUrl: recommendedVideo.videoThumbnails.first?.url ?? "N/A",
+                    thumbnailWidth: recommendedVideo.videoThumbnails.first?.width ?? 0,
+                    thumbnailHeight: recommendedVideo.videoThumbnails.first?.height ?? 0
+                )
+                context.insert(item)
+                do {
+                    try context.save()
+                } catch {
+                    print("Failed to save video to history: \(error)")
                 }
             }
-            if !playerViewController.contextualActions.isEmpty {
-                playerViewController.contextualActions = []
+        }
+
+        let maxSize = 100
+        let numRemove = recommendedVideos.count - maxSize
+        if numRemove > 0 {
+            let videosToRemove = recommendedVideos.prefix(numRemove)
+            for video in videosToRemove {
+                context.delete(video)
             }
-            self.watchedSeconds = currentTime
         }
     }
 }

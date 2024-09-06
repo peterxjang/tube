@@ -7,17 +7,30 @@ import MediaPlayer
 import Observation
 import Combine
 
+public struct SponsorBlockObject: Decodable {
+    public var category: String
+    public var actionType: String
+    public var segment: [Float]
+    public var UUID: String
+    public var videoDuration: Float
+    public var locked: Int
+    public var votes: Int
+    public var description: String
+}
+
+enum VideoPlaybackError: LocalizedError {
+    case missingUrl
+}
+
 struct VideoView: View {
     var videoId: String
     var historyVideos: [HistoryVideo]
     var recommendedVideos: [RecommendedVideo]
-    @Environment(\.modelContext) private var context
     @State var isLoading: Bool = true
     @State var player: AVPlayer? = nil
     @State var currentVideo: Video? = nil
     @State var statusObserver: AnyCancellable?
-    @State var timeObserverToken: Any? = nil
-    @State var watchedSeconds: Double = 0.0
+    @State var skippableSegments: [[Float]] = []
 
     var body: some View {
         if isLoading {
@@ -35,11 +48,15 @@ struct VideoView: View {
                 }
         } else {
             if let player = player, let video = currentVideo {
-                VideoPlayerView(video: video, player: player, watchedSeconds: $watchedSeconds, timeObserverToken: $timeObserverToken)
+                VideoPlayerView(
+                    video: video,
+                    player: player,
+                    skippableSegments: skippableSegments,
+                    historyVideos: historyVideos,
+                    recommendedVideos: recommendedVideos
+                )
                     .ignoresSafeArea()
                     .onDisappear {
-                        saveVideoToHistory(video: video, watchedSeconds: Int(watchedSeconds))
-                        saveRecommendedVideos(video: video)
                         close()
                     }
             } else {
@@ -53,14 +70,24 @@ struct VideoView: View {
         player = nil
         statusObserver?.cancel()
         statusObserver = nil
-        if let timeObserverToken {
-            player?.removeTimeObserver(timeObserverToken)
+    }
+
+    private func getSponsorSegments(id: String) async throws -> [[Float]] {
+        let url = URL(string: "https://sponsor.ajay.app/api/skipSegments?videoID=\(id)")!
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        if let videoInfo = try? JSONDecoder().decode([SponsorBlockObject].self, from: data) {
+            print(videoInfo)
+            return videoInfo.map { $0.segment }
+        } else {
+            print("SponsorBlock Invalid Response")
+            return []
         }
-        timeObserverToken = nil
     }
 
     private func playVideo(withId id: String, startTime: Int? = nil) async throws {
         let video = try await TubeApp.client.video(for: id)
+        skippableSegments = try await getSponsorSegments(id: id)
         let playerItem = try createPlayerItem(for: video)
         player = AVPlayer(playerItem: playerItem)
         player?.allowsExternalPlayback = true
@@ -98,74 +125,5 @@ struct VideoView: View {
         }
 
         return item
-    }
-
-    private func saveVideoToHistory(video: Video, watchedSeconds: Int) {
-        if let foundVideo = historyVideos.first(where: { $0.id == video.videoId }) {
-            context.delete(foundVideo)
-        }
-        let historyVideo = HistoryVideo(
-            id: video.videoId,
-            title: video.title,
-            author: video.author,
-            authorId: video.authorId,
-            published: video.published,
-            lengthSeconds: Int(video.lengthSeconds),
-            watchedSeconds: watchedSeconds,
-            viewCount: Int(video.viewCount),
-            thumbnailQuality: video.videoThumbnails.first?.quality ?? "",
-            thumbnailUrl: video.videoThumbnails.first?.url ?? "N/A",
-            thumbnailWidth: video.videoThumbnails.first?.width ?? 0,
-            thumbnailHeight: video.videoThumbnails.first?.height ?? 0
-        )
-        context.insert(historyVideo)
-        let maxHistorySize = 100
-        let numRemove = historyVideos.count - maxHistorySize
-        if numRemove > 0 {
-            let videosToRemove = historyVideos.prefix(numRemove)
-            for video in videosToRemove {
-                context.delete(video)
-            }
-        }
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save video to history: \(error)")
-        }
-    }
-
-    private func saveRecommendedVideos(video: Video) {
-        for recommendedVideo in video.recommendedVideos.prefix(3) {
-            if recommendedVideos.first(where: { $0.id == recommendedVideo.videoId }) == nil {
-                let item = RecommendedVideo(
-                    id: recommendedVideo.videoId,
-                    title: recommendedVideo.title,
-                    author: recommendedVideo.author,
-                    authorId: recommendedVideo.authorId,
-                    lengthSeconds: Int(recommendedVideo.lengthSeconds),
-                    viewCount: Int(recommendedVideo.viewCount),
-                    viewCountText: recommendedVideo.viewCountText,
-                    thumbnailQuality: recommendedVideo.videoThumbnails.first?.quality ?? "",
-                    thumbnailUrl: recommendedVideo.videoThumbnails.first?.url ?? "N/A",
-                    thumbnailWidth: recommendedVideo.videoThumbnails.first?.width ?? 0,
-                    thumbnailHeight: recommendedVideo.videoThumbnails.first?.height ?? 0
-                )
-                context.insert(item)
-                do {
-                    try context.save()
-                } catch {
-                    print("Failed to save video to history: \(error)")
-                }
-            }
-        }
-
-        let maxSize = 100
-        let numRemove = recommendedVideos.count - maxSize
-        if numRemove > 0 {
-            let videosToRemove = recommendedVideos.prefix(numRemove)
-            for video in videosToRemove {
-                context.delete(video)
-            }
-        }
     }
 }
