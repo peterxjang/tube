@@ -7,27 +7,27 @@ import MediaPlayer
 import Observation
 import Combine
 
-public struct SponsorBlockObject: Decodable {
-    public var category: String
-    public var actionType: String
-    public var segment: [Float]
-    public var UUID: String
-    public var videoDuration: Float
-    public var locked: Int
-    public var votes: Int
-    public var description: String
-}
-
-struct Chapter {
-    let title: String
-    let imageName: String
-    let startTime: TimeInterval
-    let endTime: TimeInterval
-}
-
-enum VideoPlaybackError: LocalizedError {
-    case missingUrl
-}
+//public struct SponsorBlockObject: Decodable {
+//    public var category: String
+//    public var actionType: String
+//    public var segment: [Float]
+//    public var UUID: String
+//    public var videoDuration: Float
+//    public var locked: Int
+//    public var votes: Int
+//    public var description: String
+//}
+//
+//struct Chapter {
+//    let title: String
+//    let imageName: String
+//    let startTime: TimeInterval
+//    let endTime: TimeInterval
+//}
+//
+//enum VideoPlaybackError: LocalizedError {
+//    case missingUrl
+//}
 
 @Observable
 final class OpenVideoPlayerAction {

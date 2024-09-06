@@ -13,7 +13,7 @@ struct VideoCard: View {
     var viewCountText: String?
     var savedVideos: [SavedVideo]
     var historyVideos: [HistoryVideo]
-    @Environment(OpenVideoPlayerAction.self) var openPlayer
+    var recommendedVideos: [RecommendedVideo]
 
     private var formattedDuration: String {
         let result = (Date() ..< Date().advanced(by: TimeInterval(duration))).formatted(.timeDuration)
@@ -25,7 +25,7 @@ struct VideoCard: View {
         let height = width / 1.8
 
         VStack(alignment: .leading) {
-            Button(action: action) {
+            NavigationLink(destination: VideoView(videoId: id, historyVideos: historyVideos, recommendedVideos: recommendedVideos)) {
                 ZStack(alignment: .bottomLeading) {
                     ThumbnailView(width: width, height: height, radius: 8.0, thumbnails: thumbnails)
                     VideoThumbnailTag(self.formattedDuration)
@@ -65,13 +65,5 @@ struct VideoCard: View {
                 Text("\(publishedTextValue)  |  \(viewCountTextValue)").lineLimit(1).foregroundStyle(.secondary).font(.caption)
             }
         }.frame(width: width)
-    }
-
-    @MainActor
-    func action() {
-        Task {
-            let startTime = historyVideos.first(where: { $0.id == id })?.watchedSeconds
-            await openPlayer(id: id, startTime: startTime)
-        }
     }
 }

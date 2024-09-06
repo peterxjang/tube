@@ -5,13 +5,8 @@ import SwiftUI
 @main
 struct TubeApp: App {
     static var client = APIClient()
-    @Bindable var playerState: OpenVideoPlayerAction
     var settings = Settings()
     @State var hasValidInstance: Bool? = nil
-
-    init() {
-        playerState = OpenVideoPlayerAction()
-    }
 
     var body: some Scene {
         WindowGroup {
@@ -20,13 +15,6 @@ struct TubeApp: App {
                 case .some(true):
                     NavigationStack {
                         RootView()
-                            .fullScreenCover(isPresented: $playerState.isPlayerOpen) {
-                                playerState.isPlayerOpen = false
-                                playerState.isLoading = false
-                            } content: {
-                                VideoView()
-                                    .background(.windowBackground)
-                            }
                     }
                 case .some(false):
                     OnboardingView(hasValidInstance: $hasValidInstance)
@@ -36,12 +24,8 @@ struct TubeApp: App {
                             await validateInstance()
                         }
                 }
-                if playerState.isLoading {
-                    LoadingView()
-                }
             }
         }
-        .environment(playerState)
         .modelContainer(
             for: [
                 FollowedChannel.self,

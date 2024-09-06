@@ -33,6 +33,7 @@ struct PlaylistView: View {
     var model: PlaylistViewModel
     @Query var savedVideos: [SavedVideo]
     @Query var historyVideos: [HistoryVideo]
+    @Query var recommendedVideos: [RecommendedVideo]
 
     var body: some View {
         ScrollView {
@@ -47,7 +48,8 @@ struct PlaylistView: View {
                         author: video.author ?? "Unknown Channel",
                         authorId: "UNAVAILABLE",
                         savedVideos: savedVideos,
-                        historyVideos: historyVideos
+                        historyVideos: historyVideos,
+                        recommendedVideos: recommendedVideos
                     )
                     .padding(30)
                 }

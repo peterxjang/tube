@@ -44,6 +44,7 @@ struct SearchResultsView: View {
     var model = SearchResultsViewModel()
     @Query var savedVideos: [SavedVideo]
     @Query var historyVideos: [HistoryVideo]
+    @Query var recommendedVideos: [RecommendedVideo]
 
     var body: some View {
         VStack {
@@ -69,7 +70,8 @@ struct SearchResultsView: View {
                                     authorId: video.authorId,
                                     viewCountText: video.viewCountText,
                                     savedVideos: savedVideos,
-                                    historyVideos: historyVideos
+                                    historyVideos: historyVideos,
+                                    recommendedVideos: recommendedVideos
                                 )
                             case .channel(let channel):
                                 ChannelCard(channel: channel)

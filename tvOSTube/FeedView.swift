@@ -8,6 +8,7 @@ struct FeedView: View {
     @Query(sort: \FollowedChannel.name) var channels: [FollowedChannel]
     @Query var savedVideos: [SavedVideo]
     @Query var historyVideos: [HistoryVideo]
+    @Query var recommendedVideos: [RecommendedVideo]
     @State private var combinedVideos: [VideoObject] = []
     @State private var isLoading: Bool = true
     @State private var loadedChannelsCount: Int = 0
@@ -45,7 +46,8 @@ struct FeedView: View {
                                         authorId: video.authorId,
                                         viewCountText: video.viewCountText,
                                         savedVideos: savedVideos,
-                                        historyVideos: historyVideos
+                                        historyVideos: historyVideos,
+                                        recommendedVideos: recommendedVideos
                                     )
                                 }
                                 Button {

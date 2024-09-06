@@ -61,6 +61,7 @@ struct ChannelVideosView: View {
     var model: ChannelVideosViewModel
     @Query var savedVideos: [SavedVideo]
     @Query var historyVideos: [HistoryVideo]
+    @Query var recommendedVideos: [RecommendedVideo]
 
     var body: some View {
         if let videos = model.videos {
@@ -80,7 +81,8 @@ struct ChannelVideosView: View {
                             authorId: video.authorId,
                             viewCountText: video.viewCountText,
                             savedVideos: savedVideos,
-                            historyVideos: historyVideos
+                            historyVideos: historyVideos,
+                            recommendedVideos: recommendedVideos
                         )
                     }
                 }

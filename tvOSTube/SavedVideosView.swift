@@ -34,7 +34,8 @@ struct SavedVideosView: View {
                                 authorId: video.authorId,
                                 viewCountText: video.viewCountText,
                                 savedVideos: savedVideos,
-                                historyVideos: historyVideos
+                                historyVideos: historyVideos,
+                                recommendedVideos: recommendedVideos
                             )
                         }
                     }.padding(20)
@@ -63,7 +64,8 @@ struct SavedVideosView: View {
                                 authorId: "UNAVAILABLE",
                                 viewCountText: video.viewCountText,
                                 savedVideos: savedVideos,
-                                historyVideos: historyVideos
+                                historyVideos: historyVideos,
+                                recommendedVideos: recommendedVideos
                             )
                         }
                     }.padding(20)
@@ -92,7 +94,8 @@ struct SavedVideosView: View {
                                 authorId: video.authorId,
                                 viewCountText: String(video.viewCount),
                                 savedVideos: savedVideos,
-                                historyVideos: historyVideos
+                                historyVideos: historyVideos,
+                                recommendedVideos: recommendedVideos
                             )
                         }
                     }.padding(20)

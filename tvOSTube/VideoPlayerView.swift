@@ -3,7 +3,6 @@ import SwiftUI
 
 struct VideoPlayerView: UIViewControllerRepresentable {
     var player: AVPlayer
-    @Environment(OpenVideoPlayerAction.self) private var playerState
 
     typealias NSViewControllerType = AVPlayerViewController
 
@@ -35,18 +34,16 @@ struct VideoPlayerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, player: player, playerState: playerState)
+        Coordinator(self, player: player)
     }
 
     class Coordinator: NSObject {
         var parent: VideoPlayerView
         var player: AVPlayer
-        var playerState: OpenVideoPlayerAction
 
-        init(_ parent: VideoPlayerView, player: AVPlayer, playerState: OpenVideoPlayerAction) {
+        init(_ parent: VideoPlayerView, player: AVPlayer) {
             self.parent = parent
             self.player = player
-            self.playerState = playerState
             super.init()
             NotificationCenter.default.addObserver(
                 self,
@@ -57,7 +54,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         }
 
         @objc func playerDidFinishPlaying() {
-            playerState.close()
+            print("playerDidFinishPlaying")
         }
     }
 }
