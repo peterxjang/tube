@@ -70,5 +70,5 @@ struct VideoDetailsView: View {
 }
 
 #Preview {
-    VideoDetailsView(video: Video(title: "Some Video", videoId: "", videoThumbnails: [], description: "Hello", published: 0, keywords: [], viewCount: 0, likeCount: 120, dislikeCount: 400, paid: false, premium: false, isFamilyFriendly: false, allowedRegions: [], genre: "", genreUrl: "", author: "Some Creator", authorId: "", authorUrl: "", authorThumbnails: [], subCountText: "100", lengthSeconds: 123, allowRatings: true, rating: 0, isListed: true, liveNow: false, isUpcoming: false, adaptiveFormats: [], formatStreams: [], captions: [], recommendedVideos: []))
+    VideoDetailsView(video: Video(title: "Some Video", videoId: "", videoThumbnails: [], description: "Hello", published: 0, keywords: [], viewCount: 0, viewCountText: "0", likeCount: 120, dislikeCount: 400, paid: false, premium: false, isFamilyFriendly: false, allowedRegions: [], genre: "", genreUrl: "", author: "Some Creator", authorId: "", authorUrl: "", authorThumbnails: [], subCountText: "100", lengthSeconds: 123, allowRatings: true, rating: 0, isListed: true, liveNow: false, isUpcoming: false, adaptiveFormats: [], formatStreams: [], captions: [], recommendedVideos: []))
 }

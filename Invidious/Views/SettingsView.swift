@@ -14,7 +14,11 @@ struct SettingsView: View {
             } header: {
                 Text("Instance")
             } footer: {
-                Text("Your settings and data are independent of the instance(s) you pick.")
+                VStack(alignment: .leading) {
+                    Text("Current: \(settings.invidiousInstance ?? "")")
+                    Spacer().frame(height: 10)
+                    Text("Your settings and data are independent of the instance(s) you pick.")
+                }
             }
 
             Section {
