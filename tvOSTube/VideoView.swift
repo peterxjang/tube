@@ -127,8 +127,8 @@ struct VideoView: View {
         {
             print("\(videoFormat.resolution ?? ">= 1080p") m4a")
             let composition = AVMutableComposition()
-            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video)
-            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio)
+            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: video.lengthSeconds)
+            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: video.lengthSeconds)
             return AVPlayerItem(asset: composition)
         } else if let stream = sortedStreams.first, let streamUrl = URL(string: stream.url) {
             print(stream.resolution)
@@ -138,7 +138,7 @@ struct VideoView: View {
         }
     }
 
-    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType) throws {
+    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Int32) throws {
         let asset = AVURLAsset(url: assetUrl)
         var assetTrack: AVAssetTrack?
         let group = DispatchGroup()
@@ -156,7 +156,7 @@ struct VideoView: View {
             preferredTrackID: kCMPersistentTrackID_Invalid
         )
         try compositionTrack?.insertTimeRange(
-            CMTimeRange(start: .zero, duration: asset.duration),
+            CMTimeRange(start: .zero, duration: CMTime(seconds: Double(duration), preferredTimescale: 1)),
             of: assetTrack,
             at: .zero
         )
