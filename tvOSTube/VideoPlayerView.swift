@@ -18,6 +18,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
     var historyVideos: [HistoryVideo]
     var recommendedVideos: [RecommendedVideo]
     @Environment(\.modelContext) private var databaseContext
+    @Environment(\.presentationMode) var presentationMode
 
     typealias NSViewControllerType = AVPlayerViewController
 
@@ -109,7 +110,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         }
 
         @objc func playerDidFinishPlaying() {
-            print("playerDidFinishPlaying")
+            parent.presentationMode.wrappedValue.dismiss()
         }
 
         deinit {
