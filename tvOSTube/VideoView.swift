@@ -115,15 +115,51 @@ struct VideoView: View {
             let bQuality = Int($1.quality.trimmingCharacters(in: .letters)) ?? -1
             return aQuality > bQuality
         }
-
-        let item: AVPlayerItem = if let hlsUrlStr = video.hlsUrl, let hlsUrl = URL(string: hlsUrlStr) {
-            AVPlayerItem(url: hlsUrl)
+        print(video.videoId)
+        if let hlsUrlStr = video.hlsUrl, let hlsUrl = URL(string: hlsUrlStr) {
+            print("hlsUrl")
+            return AVPlayerItem(url: hlsUrl)
+        } else if
+            let videoFormat = video.adaptiveFormats.first(where: { $0.container == "mp4" && (Int($0.resolution?.trimmingCharacters(in: .letters) ?? "") ?? 0) >= 1080  }),
+            let videoUrl = URL(string: videoFormat.url),
+            let audioFormat = video.adaptiveFormats.first(where: { $0.container == "m4a" }),
+            let audioUrl = URL(string: audioFormat.url)
+        {
+            print("\(videoFormat.resolution ?? ">= 1080p") m4a")
+            let composition = AVMutableComposition()
+            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video)
+            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio)
+            return AVPlayerItem(asset: composition)
         } else if let stream = sortedStreams.first, let streamUrl = URL(string: stream.url) {
-            AVPlayerItem(url: streamUrl)
+            print(stream.resolution)
+            return AVPlayerItem(url: streamUrl)
         } else {
             throw VideoPlaybackError.missingUrl
         }
-
-        return item
     }
+
+    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType) throws {
+        let asset = AVURLAsset(url: assetUrl)
+        var assetTrack: AVAssetTrack?
+        let group = DispatchGroup()
+        group.enter()
+        asset.loadTracks(withMediaType: mediaType) { tracks, error in
+            assetTrack = tracks?.first
+            group.leave()
+        }
+        group.wait()
+        guard let assetTrack = assetTrack else {
+            throw VideoPlaybackError.missingUrl
+        }
+        let compositionTrack = composition.addMutableTrack(
+            withMediaType: mediaType,
+            preferredTrackID: kCMPersistentTrackID_Invalid
+        )
+        try compositionTrack?.insertTimeRange(
+            CMTimeRange(start: .zero, duration: asset.duration),
+            of: assetTrack,
+            at: .zero
+        )
+    }
+
 }
