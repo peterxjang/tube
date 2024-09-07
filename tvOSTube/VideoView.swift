@@ -120,12 +120,12 @@ struct VideoView: View {
             print("hlsUrl")
             return AVPlayerItem(url: hlsUrl)
         } else if
-            let videoFormat = video.adaptiveFormats.first(where: { $0.container == "mp4" && (Int($0.resolution?.trimmingCharacters(in: .letters) ?? "") ?? 0) >= 1080  }),
+            let videoFormat = video.adaptiveFormats.first(where: { $0.container == "mp4" && (Int($0.resolution?.trimmingCharacters(in: .letters) ?? "") ?? 0) >= 640  }),
             let videoUrl = URL(string: videoFormat.url),
             let audioFormat = video.adaptiveFormats.first(where: { $0.container == "m4a" }),
             let audioUrl = URL(string: audioFormat.url)
         {
-            print("\(videoFormat.resolution ?? ">= 1080p") m4a")
+            print("adaptive \(videoFormat.resolution ?? "") m4a")
             let composition = AVMutableComposition()
             try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: video.lengthSeconds)
             try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: video.lengthSeconds)
