@@ -96,7 +96,8 @@ struct VideoView: View {
                 switch status {
                 case .readyToPlay:
                     if let startTime = startTime {
-                        self.player?.seek(to: CMTime(seconds: Double(startTime), preferredTimescale: 1))
+                        let newStartTime = Int(video.lengthSeconds) - startTime > 5 ? Double(startTime) : 0.0
+                        self.player?.seek(to: CMTime(seconds: newStartTime, preferredTimescale: 1))
                     }
                     self.player?.play()
                     self.isLoading = false
