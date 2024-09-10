@@ -95,7 +95,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
                     if currentTime >= Double(startTime) && currentTime < Double(endTime) {
                         if playerViewController.contextualActions.isEmpty {
                             let skipAction = UIAction(title: "Skip", image: UIImage(systemName: "forward.fill")) { _ in
-                                self?.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 1), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
+                                self?.player.seek(to: CMTime(seconds: Double(endTime + 1.0), preferredTimescale: 600), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.positiveInfinity)
                             }
                             playerViewController.contextualActions = [skipAction]
                         }

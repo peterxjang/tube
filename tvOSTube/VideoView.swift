@@ -95,7 +95,7 @@ struct VideoView: View {
     private func playVideo(withId id: String, startTime: Int? = nil) async throws {
         let video = try await TubeApp.client.video(for: id)
         skippableSegments = try await getSponsorSegments(id: id)
-        let playerItem = try createPlayerItem(for: video)
+        let playerItem = try await createPlayerItem(for: video)
         player = AVPlayer(playerItem: playerItem)
         player?.allowsExternalPlayback = true
         statusObserver = playerItem.publisher(for: \.status)
@@ -104,7 +104,7 @@ struct VideoView: View {
                 case .readyToPlay:
                     if let startTime = startTime {
                         let newStartTime = Int(video.lengthSeconds) - startTime > 5 ? Double(startTime) : 0.0
-                        self.player?.seek(to: CMTime(seconds: newStartTime, preferredTimescale: 1))
+                        self.player?.seek(to: CMTime(seconds: newStartTime, preferredTimescale: 600))
                     }
                     self.player?.play()
                     self.isLoading = false
@@ -117,7 +117,7 @@ struct VideoView: View {
             }
     }
 
-    private func createPlayerItem(for video: Video) throws -> AVPlayerItem {
+    private func createPlayerItem(for video: Video) async throws -> AVPlayerItem {
         let sortedStreams = video.formatStreams.sorted {
             let aQuality = Int($0.quality.trimmingCharacters(in: .letters)) ?? -1
             let bQuality = Int($1.quality.trimmingCharacters(in: .letters)) ?? -1
@@ -134,13 +134,15 @@ struct VideoView: View {
             let audioUrl = URL(string: audioFormat.url)
         {
             print("adaptive \(videoFormat.resolution ?? "") m4a")
-            var duration = Double(video.lengthSeconds)
-            if let dur = videoUrl.valueOf("dur") {
-                duration = Double(dur) ?? Double(video.lengthSeconds)
-            }
             let composition = AVMutableComposition()
-            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: duration)
-            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: duration)
+            await withThrowingTaskGroup(of: Void.self) { group in
+                group.addTask {
+                    try? await self.addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: Double(video.lengthSeconds))
+                }
+                group.addTask {
+                    try? await self.addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: Double(video.lengthSeconds))
+                }
+            }
             return AVPlayerItem(asset: composition)
         } else if let stream = sortedStreams.first, let streamUrl = URL(string: stream.url) {
             print(stream.resolution)
@@ -150,28 +152,26 @@ struct VideoView: View {
         }
     }
 
-    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Double) throws {
+    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Double) async throws {
         let asset = AVURLAsset(url: assetUrl)
-        var assetTrack: AVAssetTrack?
-        let group = DispatchGroup()
-        group.enter()
-        asset.loadTracks(withMediaType: mediaType) { tracks, error in
-            assetTrack = tracks?.first
-            group.leave()
-        }
-        group.wait()
-        guard let assetTrack = assetTrack else {
+        print("START loadTracks")
+        let assetTracks = try await asset.loadTracks(withMediaType: mediaType)
+        print("END loadTracks")
+        guard let assetTrack = assetTracks.first else {
             throw VideoPlaybackError.missingUrl
         }
         let compositionTrack = composition.addMutableTrack(
             withMediaType: mediaType,
             preferredTrackID: kCMPersistentTrackID_Invalid
         )
+        var seconds = duration
+        if let dur = assetUrl.valueOf("dur") {
+            seconds = Double(dur) ?? duration
+        }
         try compositionTrack?.insertTimeRange(
-            CMTimeRange(start: .zero, duration: CMTime(seconds: Double(duration), preferredTimescale: 1)),
+            CMTimeRange(start: .zero, duration: CMTime(seconds: seconds, preferredTimescale: 600)),
             of: assetTrack,
             at: .zero
         )
     }
-
 }
