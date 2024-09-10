@@ -22,13 +22,6 @@ enum VideoPlaybackError: LocalizedError {
     case missingUrl
 }
 
-extension URL {
-    func valueOf(_ queryParameterName: String) -> String? {
-        guard let url = URLComponents(string: self.absoluteString) else { return nil }
-        return url.queryItems?.first(where: { $0.name == queryParameterName })?.value
-    }
-}
-
 struct VideoView: View {
     var videoId: String
     var historyVideos: [HistoryVideo]
@@ -93,8 +86,10 @@ struct VideoView: View {
     }
 
     private func playVideo(withId id: String, startTime: Int? = nil) async throws {
-        let video = try await TubeApp.client.video(for: id)
-        skippableSegments = try await getSponsorSegments(id: id)
+        async let videoTask = TubeApp.client.video(for: id)
+        async let sponsorSegmentsTask = getSponsorSegments(id: id)
+        let (video, segments) = try await (videoTask, sponsorSegmentsTask)
+        skippableSegments = segments
         let playerItem = try await createPlayerItem(for: video)
         player = AVPlayer(playerItem: playerItem)
         player?.allowsExternalPlayback = true
@@ -127,51 +122,11 @@ struct VideoView: View {
         if let hlsUrlStr = video.hlsUrl, let hlsUrl = URL(string: hlsUrlStr) {
             print("hlsUrl")
             return AVPlayerItem(url: hlsUrl)
-        } else if
-            let videoFormat = video.adaptiveFormats.first(where: { $0.container == "mp4" && (Int($0.resolution?.trimmingCharacters(in: .letters) ?? "") ?? 0) >= 640  }),
-            let videoUrl = URL(string: videoFormat.url),
-            let audioFormat = video.adaptiveFormats.first(where: { $0.container == "m4a" }),
-            let audioUrl = URL(string: audioFormat.url)
-        {
-            print("adaptive \(videoFormat.resolution ?? "") m4a")
-            let composition = AVMutableComposition()
-            await withThrowingTaskGroup(of: Void.self) { group in
-                group.addTask {
-                    try? await self.addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: Double(video.lengthSeconds))
-                }
-                group.addTask {
-                    try? await self.addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: Double(video.lengthSeconds))
-                }
-            }
-            return AVPlayerItem(asset: composition)
         } else if let stream = sortedStreams.first, let streamUrl = URL(string: stream.url) {
             print(stream.resolution)
             return AVPlayerItem(url: streamUrl)
         } else {
             throw VideoPlaybackError.missingUrl
         }
-    }
-
-    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Double) async throws {
-        let asset = AVURLAsset(url: assetUrl)
-        print("START loadTracks")
-        let assetTracks = try await asset.loadTracks(withMediaType: mediaType)
-        print("END loadTracks")
-        guard let assetTrack = assetTracks.first else {
-            throw VideoPlaybackError.missingUrl
-        }
-        let compositionTrack = composition.addMutableTrack(
-            withMediaType: mediaType,
-            preferredTrackID: kCMPersistentTrackID_Invalid
-        )
-        var seconds = duration
-        if let dur = assetUrl.valueOf("dur") {
-            seconds = Double(dur) ?? duration
-        }
-        try compositionTrack?.insertTimeRange(
-            CMTimeRange(start: .zero, duration: CMTime(seconds: seconds, preferredTimescale: 600)),
-            of: assetTrack,
-            at: .zero
-        )
     }
 }
