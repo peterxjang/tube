@@ -22,6 +22,13 @@ enum VideoPlaybackError: LocalizedError {
     case missingUrl
 }
 
+extension URL {
+    func valueOf(_ queryParameterName: String) -> String? {
+        guard let url = URLComponents(string: self.absoluteString) else { return nil }
+        return url.queryItems?.first(where: { $0.name == queryParameterName })?.value
+    }
+}
+
 struct VideoView: View {
     var videoId: String
     var historyVideos: [HistoryVideo]
@@ -127,9 +134,13 @@ struct VideoView: View {
             let audioUrl = URL(string: audioFormat.url)
         {
             print("adaptive \(videoFormat.resolution ?? "") m4a")
+            var duration = Double(video.lengthSeconds)
+            if let dur = videoUrl.valueOf("dur") {
+                duration = Double(dur) ?? Double(video.lengthSeconds)
+            }
             let composition = AVMutableComposition()
-            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: video.lengthSeconds)
-            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: video.lengthSeconds)
+            try addAssetToComposition(composition, assetUrl: videoUrl, mediaType: .video, duration: duration)
+            try addAssetToComposition(composition, assetUrl: audioUrl, mediaType: .audio, duration: duration)
             return AVPlayerItem(asset: composition)
         } else if let stream = sortedStreams.first, let streamUrl = URL(string: stream.url) {
             print(stream.resolution)
@@ -139,7 +150,7 @@ struct VideoView: View {
         }
     }
 
-    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Int32) throws {
+    private func addAssetToComposition(_ composition: AVMutableComposition, assetUrl: URL, mediaType: AVMediaType, duration: Double) throws {
         let asset = AVURLAsset(url: assetUrl)
         var assetTrack: AVAssetTrack?
         let group = DispatchGroup()
