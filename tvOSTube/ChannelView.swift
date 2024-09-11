@@ -34,15 +34,17 @@ class ChannelViewModel {
     }
     
     func load() async {
-        error = nil
-        loading = true
-        do {
-            channel = try await TubeApp.client.channel(for: channelId)
-        } catch {
-            print(error)
-            self.error = error
+        if loading {
+            loading = true
+            error = nil
+            do {
+                channel = try await TubeApp.client.channel(for: channelId)
+            } catch {
+                print(error)
+                self.error = error
+            }
+            loading = false
         }
-        loading = false
     }
 }
 
@@ -66,8 +68,10 @@ struct ChannelView: View {
             }
         }
         .asyncTaskOverlay(error: model.error, isLoading: model.loading)
-        .task(id: model.channelId) {
-            await model.load()
+        .onAppear {
+            Task {
+                await model.load()
+            }
         }
         .refreshable {
             await model.load()
